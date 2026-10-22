@@ -5,6 +5,7 @@ type Produto =
 {
   id: string
   nome: string
+  categoria: 'Doces' | 'Salgados' | 'Bebidas' | 'Chocolates'
   preco: number
   quantidade: number
   estoqueMinimo?: number
@@ -31,15 +32,17 @@ const FORMAS_PAGAMENTO: FormaPagamento[] =
 
 const PRODUTOS: Produto[] = 
 [
-  { id: '1', nome: 'Água mineral 500 ml', preco: 2.5, quantidade: 24, estoqueMinimo: 6, codigoBarras: '7891000000011' },
-  { id: '2', nome: 'Refrigerante lata 350 ml', preco: 5, quantidade: 4, estoqueMinimo: 6, codigoBarras: '7891000000028' },
-  { id: '3', nome: 'Pão de queijo', preco: 3.5, quantidade: 0, estoqueMinimo: 4, codigoBarras: '7891000000035' },
-  { id: '4', nome: 'Barra de chocolate', preco: 6.9, quantidade: 12, codigoBarras: '7891000000042' },
-  { id: '5', nome: 'Café expresso em cápsula', preco: 2.2, quantidade: 5, estoqueMinimo: 5, codigoBarras: '7891000000059' },
-  { id: '6', nome: 'Biscoito recheado sabor chocolate com cobertura extra grande', preco: 4.75, quantidade: 18, codigoBarras: '7891000000066' },
-  { id: '7', nome: 'Suco de caixinha', preco: 3, quantidade: 9, estoqueMinimo: 3, codigoBarras: '7891000000073' },
-  { id: '8', nome: 'Salgadinho', preco: 4, quantidade: 1, codigoBarras: '7891000000080' },
+  { id: '1', nome: 'Água mineral 500 ml', categoria: 'Bebidas', preco: 2.5, quantidade: 24, estoqueMinimo: 6, codigoBarras: '7891000000011' },
+  { id: '2', nome: 'Refrigerante lata 350 ml', categoria: 'Bebidas', preco: 5, quantidade: 4, estoqueMinimo: 6, codigoBarras: '7891000000028' },
+  { id: '3', nome: 'Pão de queijo', categoria: 'Salgados', preco: 3.5, quantidade: 0, estoqueMinimo: 4, codigoBarras: '7891000000035' },
+  { id: '4', nome: 'Barra de chocolate', categoria: 'Chocolates', preco: 6.9, quantidade: 12, codigoBarras: '7891000000042' },
+  { id: '5', nome: 'Café expresso em cápsula', categoria: 'Bebidas', preco: 2.2, quantidade: 5, estoqueMinimo: 5, codigoBarras: '7891000000059' },
+  { id: '6', nome: 'Biscoito recheado sabor chocolate com cobertura extra grande', categoria: 'Doces', preco: 4.75, quantidade: 18, codigoBarras: '7891000000066' },
+  { id: '7', nome: 'Suco de caixinha', categoria: 'Bebidas', preco: 3, quantidade: 9, estoqueMinimo: 3, codigoBarras: '7891000000073' },
+  { id: '8', nome: 'Salgadinho', categoria: 'Salgados', preco: 4, quantidade: 1, codigoBarras: '7891000000080' },
 ]
+
+const CATEGORIAS: Produto['categoria'][] = ['Doces', 'Salgados', 'Bebidas', 'Chocolates']
 
 const COMO_COMPRAR =
 [
@@ -59,6 +62,10 @@ const estaComEstoqueBaixo = (p: Produto): boolean =>
   p.estoqueMinimo !== undefined &&
   p.quantidade > 0 &&
   p.quantidade <= p.estoqueMinimo
+
+const estaNasUltimasUnidades = (p: Produto): boolean =>
+  p.quantidade > 0 &&
+  (p.estoqueMinimo !== undefined ? p.quantidade <= p.estoqueMinimo : p.quantidade <= 3)
 
 // ---------- Componentes (-> T10 a T14, src/components) ----------
 function Cabecalho() 
@@ -178,6 +185,7 @@ function ProdutoCard({ produto }: { produto: Produto }) {
       <div>
         <div className="flex items-start justify-between gap-2">
           <h3 className="wrap-break-word font-semibold text-slate-900">{produto.nome}</h3>
+          <p className="mt-1 text-xs text-slate-500">{produto.categoria}</p>
           {indisponivel && (
             <span className="shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700">
               Indisponível
@@ -205,18 +213,133 @@ function ProdutoCard({ produto }: { produto: Produto }) {
   )
 }
 
-function ListaProdutos() 
+type FiltrosCatalogo = {
+  categorias: Produto['categoria'][]
+  emEstoque: boolean
+  ultimasUnidades: boolean
+  visualizacao: 'grade' | 'lista'
+}
+
+function CaixaFiltros({
+  filtros,
+  onChange,
+}: {
+  filtros: FiltrosCatalogo
+  onChange: (filtros: FiltrosCatalogo) => void
+}) {
+  const alternarCategoria = (categoria: Produto['categoria']) => {
+    const categorias = filtros.categorias.includes(categoria)
+      ? filtros.categorias.filter((item) => item !== categoria)
+      : [...filtros.categorias, categoria]
+
+    onChange({ ...filtros, categorias })
+  }
+
+  return (
+    <aside aria-labelledby="titulo-filtros" className="h-fit rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 id="titulo-filtros" className="text-lg font-semibold text-slate-900">
+        Filtros
+      </h2>
+
+      <fieldset className="mt-4">
+        <legend className="text-sm font-semibold text-slate-700">Categoria</legend>
+        <div className="mt-2 space-y-2">
+          {CATEGORIAS.map((categoria) => (
+            <label key={categoria} className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+              <input
+                type="checkbox"
+                checked={filtros.categorias.includes(categoria)}
+                onChange={() => alternarCategoria(categoria)}
+                className="h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600"
+              />
+              {categoria}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset className="mt-5 border-t border-slate-100 pt-4">
+        <legend className="text-sm font-semibold text-slate-700">Disponibilidade</legend>
+        <div className="mt-2 space-y-2">
+          <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+            <input
+              type="checkbox"
+              checked={filtros.emEstoque}
+              onChange={(event) => onChange({ ...filtros, emEstoque: event.target.checked })}
+              className="h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600"
+            />
+            Em estoque
+          </label>
+          <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+            <input
+              type="checkbox"
+              checked={filtros.ultimasUnidades}
+              onChange={(event) => onChange({ ...filtros, ultimasUnidades: event.target.checked })}
+              className="h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600"
+            />
+            Últimas unidades
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset className="mt-5 border-t border-slate-100 pt-4">
+        <legend className="text-sm font-semibold text-slate-700">Visualização</legend>
+        <div className="mt-2 flex gap-2">
+          {(['grade', 'lista'] as const).map((visualizacao) => (
+            <button
+              key={visualizacao}
+              type="button"
+              aria-pressed={filtros.visualizacao === visualizacao}
+              onClick={() => onChange({ ...filtros, visualizacao })}
+              className={`rounded-lg border px-3 py-1.5 text-sm font-semibold capitalize focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                filtros.visualizacao === visualizacao
+                  ? 'border-blue-700 bg-blue-700 text-white'
+                  : 'border-slate-300 text-slate-700 hover:bg-slate-50'
+              }`}
+            >
+              {visualizacao}
+            </button>
+          ))}
+        </div>
+      </fieldset>
+    </aside>
+  )
+}
+
+function ListaProdutos({
+  filtros,
+}: {
+  filtros: FiltrosCatalogo
+}) 
 {
+  const produtosFiltrados = PRODUTOS.filter((produto) => {
+    const categoriaSelecionada =
+      filtros.categorias.length === 0 || filtros.categorias.includes(produto.categoria)
+    const disponibilidadeSelecionada =
+      (!filtros.emEstoque || produto.quantidade > 0) &&
+      (!filtros.ultimasUnidades || estaNasUltimasUnidades(produto))
+
+    return categoriaSelecionada && disponibilidadeSelecionada
+  })
+
   return (
     <section aria-labelledby="titulo-produtos">
       <h2 id="titulo-produtos" className="mb-3 text-lg font-semibold text-slate-900">
         Produtos
       </h2>
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {PRODUTOS.map((p) => (
-          <ProdutoCard key={p.id} produto={p} />
+      <ul className={filtros.visualizacao === 'grade'
+        ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3'
+        : 'grid grid-cols-1 gap-3'}
+      >
+        {produtosFiltrados.map((produto) => (
+          <ProdutoCard key={produto.id} produto={produto} />
         ))}
       </ul>
+      {produtosFiltrados.length === 0 && (
+        <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-600">
+          Nenhum produto encontrado para esses filtros.
+        </p>
+      )}
     </section>
   )
 }
@@ -224,16 +347,26 @@ function ListaProdutos()
 // ---------- Página ----------
 export default function App() 
 {
+  const [filtros, setFiltros] = useState<FiltrosCatalogo>({
+    categorias: [],
+    emEstoque: false,
+    ultimasUnidades: false,
+    visualizacao: 'grade',
+  })
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Cabecalho />
-      <main className="mx-auto grid max-w-6xl gap-6 px-4 py-6 lg:grid-cols-3">
-        <div className="space-y-6 lg:order-2 lg:col-span-1">
-          <CardPagamento />
-          <ComoComprar />
-        </div>
-        <div className="lg:order-1 lg:col-span-2">
-          <ListaProdutos />
+      <main className="mx-auto grid max-w-6xl gap-6 px-4 py-6 lg:grid-cols-4">
+        <CaixaFiltros filtros={filtros} onChange={setFiltros} />
+        <div className="grid gap-6 lg:col-span-3 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <ListaProdutos filtros={filtros} />
+          </div>
+          <div className="space-y-6">
+            <CardPagamento />
+            <ComoComprar />
+          </div>
         </div>
       </main>
     </div>

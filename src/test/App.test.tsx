@@ -1,5 +1,6 @@
 // Runtime validation coverage for: storefront rendering.
 import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import App from '../App'
 
@@ -26,5 +27,26 @@ describe('storefront', () => {
       expect(within(product).getByText('Indisponível')).toBeInTheDocument()
       expect(within(product).getByRole('button', { name: 'Adicionar ao carrinho' })).toBeDisabled()
     }
+  })
+
+  it('filters by category and availability and switches to list view', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('checkbox', { name: 'Doces' }))
+    expect(screen.getByText('Biscoito recheado sabor chocolate com cobertura extra grande')).toBeInTheDocument()
+    expect(screen.queryByText('Água mineral 500 ml')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('checkbox', { name: 'Doces' }))
+    await user.click(screen.getByRole('checkbox', { name: 'Em estoque' }))
+    expect(screen.queryByText('Pão de queijo')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('checkbox', { name: 'Últimas unidades' }))
+    expect(screen.getByText('Refrigerante lata 350 ml')).toBeInTheDocument()
+    expect(screen.getByText('Salgadinho')).toBeInTheDocument()
+
+    const listButton = screen.getByRole('button', { name: 'lista' })
+    await user.click(listButton)
+    expect(listButton).toHaveAttribute('aria-pressed', 'true')
   })
 })

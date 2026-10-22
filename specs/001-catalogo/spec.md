@@ -37,6 +37,8 @@ precisar conferir a tabela de preços em papel.
   para que cartão possa entrar no futuro sem refazer o catálogo
 - R8. Cada item mostra seu código de barras, para conferência
 - R9. O layout se adapta a mobile, tablet e desktop
+- R10. Permitir filtrar o catálogo por categoria e disponibilidade, e
+  alternar entre visualização em grade e lista
 
 ## Critérios de aceite
 - Dado que existem itens cadastrados, quando abrir o catálogo, então
@@ -47,6 +49,15 @@ precisar conferir a tabela de preços em papel.
   "Nenhum item encontrado".
 - Dado que a busca foi limpa, quando apagar o termo, então a lista
   completa volta a aparecer.
+- Dada uma categoria selecionada, quando aplicar o filtro, então só
+  aparecem itens daquela categoria.
+- Dado o filtro "Em estoque" selecionado, quando aplicar os filtros,
+  então itens com quantidade zero não aparecem.
+- Dado o filtro "Últimas unidades" selecionado, quando aplicar os
+  filtros, então aparecem apenas itens com estoque positivo abaixo do
+  mínimo definido ou, sem mínimo, com até três unidades.
+- Dado que selecionei a visualização em lista, quando olhar o catálogo,
+  então os produtos aparecem em uma única coluna.
 - Dado um item com estoque 0, quando visualizar, então aparece
   "Indisponível" e o botão de adicionar ao carrinho fica desabilitado.
 - Dado um item com preço 3.5, quando exibir, então aparece "R$ 3,50".
@@ -76,7 +87,7 @@ precisar conferir a tabela de preços em papel.
   administrador, Feature 007)
 - Pagamento com cartão (futuro)
 - Fotos dos produtos
-- Categorias e filtros avançados
+- Busca por texto (R3) e filtros avançados
 
 ## Dependências com outras features
 - **004 Identificação:** o catálogo não exige login. A opção "Ficha"
