@@ -55,6 +55,14 @@ const COMO_COMPRAR =
 const formatarMoeda = (valor: number): string =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor)
 
+const normalizarBusca = (valor: string): string =>
+  valor
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('pt-BR')
+    .replace(/\s+/g, ' ')
+    .trim()
+
 const estaIndisponivel = (p: Produto): boolean => p.quantidade === 0
 
 const estaComEstoqueBaixo = (p: Produto): boolean =>
@@ -183,9 +191,8 @@ function ProdutoCard({ produto }: { produto: Produto }) {
   return (
     <li className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <div>
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="wrap-break-word font-semibold text-slate-900">{produto.nome}</h3>
-          <p className="mt-1 text-xs text-slate-500">{produto.categoria}</p>
+        <div className="mb-2 flex flex-wrap items-center gap-1.5">
+          <p className="text-xs font-medium text-slate-500">{produto.categoria}</p>
           {indisponivel && (
             <span className="shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700">
               Indisponível
@@ -197,6 +204,9 @@ function ProdutoCard({ produto }: { produto: Produto }) {
             </span>
           )}
         </div>
+        <h3 className="min-w-0 wrap-break-word text-base font-semibold leading-snug text-slate-900">
+          {produto.nome}
+        </h3>
         <p className="mt-2 text-xl font-bold text-slate-900">{formatarMoeda(produto.preco)}</p>
         <p className="text-sm text-slate-600">Disponível: {produto.quantidade}</p>
         <p className="mt-1 text-xs text-slate-400">Cód. {produto.codigoBarras}</p>
@@ -308,22 +318,52 @@ function CaixaFiltros({
 
 function ListaProdutos({
   filtros,
+  busca,
+  onBuscaChange,
 }: {
   filtros: FiltrosCatalogo
+  busca: string
+  onBuscaChange: (busca: string) => void
 }) 
 {
   const produtosFiltrados = PRODUTOS.filter((produto) => {
+    const termo = normalizarBusca(busca)
+    const precoFormatado = formatarMoeda(produto.preco)
+    const precoComPonto = produto.preco.toFixed(2)
+    const precoComVirgula = precoComPonto.replace('.', ',')
+    const correspondeABusca =
+      termo.length === 0 ||
+      [
+        produto.nome,
+        produto.categoria,
+        produto.codigoBarras,
+        precoFormatado,
+        precoComPonto,
+        precoComVirgula,
+        String(produto.preco),
+      ].some((campo) => normalizarBusca(campo).includes(termo))
     const categoriaSelecionada =
       filtros.categorias.length === 0 || filtros.categorias.includes(produto.categoria)
     const disponibilidadeSelecionada =
       (!filtros.emEstoque || produto.quantidade > 0) &&
       (!filtros.ultimasUnidades || estaNasUltimasUnidades(produto))
 
-    return categoriaSelecionada && disponibilidadeSelecionada
+    return correspondeABusca && categoriaSelecionada && disponibilidadeSelecionada
   })
 
   return (
     <section aria-labelledby="titulo-produtos">
+      <label htmlFor="busca-produtos" className="sr-only">
+        Buscar produtos por nome, tipo, valor ou código
+      </label>
+      <input
+        id="busca-produtos"
+        type="search"
+        value={busca}
+        onChange={(event) => onBuscaChange(event.target.value)}
+        placeholder="Buscar por nome, tipo, valor ou código de barras"
+        className="mb-4 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200"
+      />
       <h2 id="titulo-produtos" className="mb-3 text-lg font-semibold text-slate-900">
         Produtos
       </h2>
@@ -353,20 +393,17 @@ export default function App()
     ultimasUnidades: false,
     visualizacao: 'grade',
   })
+  const [busca, setBusca] = useState('')
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Cabecalho />
-      <main className="mx-auto grid max-w-6xl gap-6 px-4 py-6 lg:grid-cols-4">
+      <main className="mx-auto grid max-w-[1600px] gap-4 px-3 py-5 sm:px-4 lg:grid-cols-[200px_minmax(0,1fr)_260px] lg:gap-5 lg:py-6">
         <CaixaFiltros filtros={filtros} onChange={setFiltros} />
-        <div className="grid gap-6 lg:col-span-3 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <ListaProdutos filtros={filtros} />
-          </div>
-          <div className="space-y-6">
-            <CardPagamento />
-            <ComoComprar />
-          </div>
+        <ListaProdutos filtros={filtros} busca={busca} onBuscaChange={setBusca} />
+        <div className="space-y-6">
+          <CardPagamento />
+          <ComoComprar />
         </div>
       </main>
     </div>

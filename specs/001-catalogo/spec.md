@@ -16,8 +16,8 @@ precisar conferir a tabela de preços em papel.
 - R1. Listar todos os itens ativos do mercadinho
 - R2. Cada item exibe nome, preço (R$ com 2 casas decimais) e
   quantidade disponível
-- R3. Buscar itens por nome, sem diferenciar maiúsculas/minúsculas e
-  acentos
+- R3. Buscar itens por nome, tipo/categoria, valor ou código de barras,
+  sem diferenciar maiúsculas/minúsculas e acentos
 - R4. Itens com estoque zero aparecem como "Indisponível" e não podem
   ser adicionados ao carrinho
 - R5. Estoque mínimo é opcional e controlado pelo administrador:
@@ -43,7 +43,8 @@ precisar conferir a tabela de preços em papel.
 ## Critérios de aceite
 - Dado que existem itens cadastrados, quando abrir o catálogo, então
   todos os itens ativos aparecem com nome, preço e quantidade.
-- Dado o termo "agua" na busca, quando buscar, então aparece "Água"
+- Dado o termo "agua", "bebidas", "2,50" ou um código de barras na
+  busca, quando buscar, então aparecem os itens correspondentes
   (ignorando acento e caixa).
 - Dado um termo sem resultado, quando buscar, então aparece a mensagem
   "Nenhum item encontrado".
@@ -87,7 +88,7 @@ precisar conferir a tabela de preços em papel.
   administrador, Feature 007)
 - Pagamento com cartão (futuro)
 - Fotos dos produtos
-- Busca por texto (R3) e filtros avançados
+- Filtros avançados além de categoria e disponibilidade
 
 ## Dependências com outras features
 - **004 Identificação:** o catálogo não exige login. A opção "Ficha"

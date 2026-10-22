@@ -29,6 +29,22 @@ describe('storefront', () => {
     }
   })
 
+  it('shows category and stock status above the product name', () => {
+    render(<App />)
+
+    const product = screen.getByRole('heading', { name: 'Refrigerante lata 350 ml' }).closest('li')
+    expect(product).not.toBeNull()
+
+    if (product) {
+      const category = within(product).getByText('Bebidas')
+      const stockStatus = within(product).getByText('Estoque baixo')
+      const productName = within(product).getByRole('heading', { name: 'Refrigerante lata 350 ml' })
+
+      expect(category.compareDocumentPosition(stockStatus) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+      expect(stockStatus.compareDocumentPosition(productName) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    }
+  })
+
   it('filters by category and availability and switches to list view', async () => {
     const user = userEvent.setup()
     render(<App />)
@@ -48,5 +64,33 @@ describe('storefront', () => {
     const listButton = screen.getByRole('button', { name: 'lista' })
     await user.click(listButton)
     expect(listButton).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('searches products by name, type, price and barcode without accent sensitivity', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const search = screen.getByRole('searchbox', {
+      name: 'Buscar produtos por nome, tipo, valor ou código',
+    })
+
+    await user.type(search, 'agua')
+    expect(screen.getByText('Água mineral 500 ml')).toBeInTheDocument()
+    expect(screen.queryByText('Pão de queijo')).not.toBeInTheDocument()
+
+    await user.clear(search)
+    await user.type(search, 'salgados')
+    expect(screen.getByText('Salgadinho')).toBeInTheDocument()
+    expect(screen.getByText('Pão de queijo')).toBeInTheDocument()
+    expect(screen.queryByText('Água mineral 500 ml')).not.toBeInTheDocument()
+
+    await user.clear(search)
+    await user.type(search, 'R$ 2,50')
+    expect(screen.getByText('Água mineral 500 ml')).toBeInTheDocument()
+    expect(screen.queryByText('Barra de chocolate')).not.toBeInTheDocument()
+
+    await user.clear(search)
+    await user.type(search, '7891000000035')
+    expect(screen.getByText('Pão de queijo')).toBeInTheDocument()
+    expect(screen.queryByText('Água mineral 500 ml')).not.toBeInTheDocument()
   })
 })
