@@ -77,8 +77,8 @@ specs/
 | Funcionalidade | Spec | Plano | Tarefas |
 |---|---|---|---|
 | 001 Catálogo de produtos | ✅ | ✅ | ✅ |
-| 002 Carrinho | ⏳ | ⏳ | ⏳ |
-| 003 Leitura de código de barras | ⏳ | ⏳ | ⏳ |
+| 002 Carrinho | ✅ | ⏳ | ⏳ |
+| 003 Leitura de código de barras | ✅ | ⏳ | ⏳ |
 | 004 Identificação do usuário | ✅ | ⏳ | ⏳ |
 | 005 Pagamento (Pix, ficha e comprovante) | ⏳ | ⏳ | ⏳ |
 | 006 Crédito pré-pago | ✅ | ⏳ | ⏳ |

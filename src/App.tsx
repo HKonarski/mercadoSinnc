@@ -237,6 +237,8 @@ function CaixaFiltros({
   filtros: FiltrosCatalogo
   onChange: (filtros: FiltrosCatalogo) => void
 }) {
+  const [mostrarFiltrosAdicionais, setMostrarFiltrosAdicionais] = useState(false)
+
   const alternarCategoria = (categoria: Produto['categoria']) => {
     const categorias = filtros.categorias.includes(categoria)
       ? filtros.categorias.filter((item) => item !== categoria)
@@ -246,21 +248,39 @@ function CaixaFiltros({
   }
 
   return (
-    <aside aria-labelledby="titulo-filtros" className="h-fit rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      <h2 id="titulo-filtros" className="text-lg font-semibold text-slate-900">
+    <aside
+      aria-labelledby="titulo-filtros"
+      className="h-fit min-w-0 rounded-none border-0 bg-transparent p-0 shadow-none lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:rounded-2xl lg:border lg:border-slate-200 lg:bg-white lg:p-4 lg:shadow-sm"
+    >
+      <h2 id="titulo-filtros" className="sr-only text-lg font-semibold text-slate-900 lg:not-sr-only">
         Filtros
       </h2>
 
-      <fieldset className="mt-4">
-        <legend className="text-sm font-semibold text-slate-700">Categoria</legend>
-        <div className="mt-2 space-y-2">
+      <fieldset className="min-w-0 lg:mt-4">
+        <legend className="sr-only text-sm font-semibold text-slate-700 lg:not-sr-only">Categoria</legend>
+        <div className="-mx-3 mt-1 flex gap-2 overflow-x-auto px-3 pb-2 lg:mx-0 lg:mt-2 lg:flex-col lg:gap-2 lg:overflow-visible lg:px-0 lg:pb-0">
+          <button
+            type="button"
+            aria-pressed={filtros.categorias.length === 0}
+            onClick={() => onChange({ ...filtros, categorias: [] })}
+            className={`shrink-0 rounded-full border px-3 py-1.5 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+              filtros.categorias.length === 0
+                ? 'border-amber-500 bg-amber-400 font-semibold text-slate-900'
+                : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+            } lg:hidden`}
+          >
+            Todos
+          </button>
           {CATEGORIAS.map((categoria) => (
-            <label key={categoria} className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+            <label
+              key={categoria}
+              className="has-[:checked]:border-amber-500 has-[:checked]:bg-amber-400 has-[:checked]:font-semibold has-[:checked]:text-slate-900 flex shrink-0 cursor-pointer items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-600 focus-within:ring-2 focus-within:ring-blue-600 lg:has-[:checked]:border-transparent lg:has-[:checked]:bg-transparent lg:has-[:checked]:font-normal lg:has-[:checked]:text-slate-600 lg:rounded-none lg:border-0 lg:bg-transparent lg:px-0 lg:py-0"
+            >
               <input
                 type="checkbox"
                 checked={filtros.categorias.includes(categoria)}
                 onChange={() => alternarCategoria(categoria)}
-                className="h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600"
+                className="sr-only h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600 lg:not-sr-only"
               />
               {categoria}
             </label>
@@ -268,64 +288,95 @@ function CaixaFiltros({
         </div>
       </fieldset>
 
-      <fieldset className="mt-5 border-t border-slate-100 pt-4">
-        <legend className="text-sm font-semibold text-slate-700">Disponibilidade</legend>
-        <div className="mt-2 space-y-2">
-          <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
-            <input
-              type="checkbox"
-              checked={filtros.emEstoque}
-              onChange={(event) => onChange({ ...filtros, emEstoque: event.target.checked })}
-              className="h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600"
-            />
-            Em estoque
-          </label>
-          <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
-            <input
-              type="checkbox"
-              checked={filtros.ultimasUnidades}
-              onChange={(event) => onChange({ ...filtros, ultimasUnidades: event.target.checked })}
-              className="h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600"
-            />
-            Últimas unidades
-          </label>
-        </div>
-      </fieldset>
+      <button
+        type="button"
+        aria-expanded={mostrarFiltrosAdicionais}
+        aria-controls="filtros-adicionais"
+        onClick={() => setMostrarFiltrosAdicionais((mostrar) => !mostrar)}
+        className="mt-1 rounded-lg px-2 py-1 text-sm font-medium text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 lg:hidden"
+      >
+        {mostrarFiltrosAdicionais ? 'Menos filtros' : 'Mais filtros'}
+      </button>
 
-      <fieldset className="mt-5 border-t border-slate-100 pt-4">
-        <legend className="text-sm font-semibold text-slate-700">Visualização</legend>
-        <div className="mt-2 flex gap-2">
-          {(['grade', 'lista'] as const).map((visualizacao) => (
-            <button
-              key={visualizacao}
-              type="button"
-              aria-pressed={filtros.visualizacao === visualizacao}
-              onClick={() => onChange({ ...filtros, visualizacao })}
-              className={`rounded-lg border px-3 py-1.5 text-sm font-semibold capitalize focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
-                filtros.visualizacao === visualizacao
-                  ? 'border-blue-700 bg-blue-700 text-white'
-                  : 'border-slate-300 text-slate-700 hover:bg-slate-50'
-              }`}
-            >
-              {visualizacao}
-            </button>
-          ))}
-        </div>
-      </fieldset>
+      <div
+        id="filtros-adicionais"
+        className={`${mostrarFiltrosAdicionais ? 'block' : 'hidden'} lg:block`}
+      >
+        <fieldset className="mt-2 border-t border-slate-100 pt-3 lg:mt-5 lg:pt-4">
+          <legend className="text-sm font-semibold text-slate-700">Disponibilidade</legend>
+          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2 lg:flex-col">
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+              <input
+                type="checkbox"
+                checked={filtros.emEstoque}
+                onChange={(event) => onChange({ ...filtros, emEstoque: event.target.checked })}
+                className="h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600"
+              />
+              Em estoque
+            </label>
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+              <input
+                type="checkbox"
+                checked={filtros.ultimasUnidades}
+                onChange={(event) => onChange({ ...filtros, ultimasUnidades: event.target.checked })}
+                className="h-4 w-4 rounded border-slate-300 accent-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600"
+              />
+              Últimas unidades
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset className="mt-3 border-t border-slate-100 pt-3 lg:mt-5 lg:pt-4">
+          <legend className="text-sm font-semibold text-slate-700">Visualização</legend>
+          <div className="mt-2 flex gap-2">
+            {(['grade', 'lista'] as const).map((visualizacao) => (
+              <button
+                key={visualizacao}
+                type="button"
+                aria-pressed={filtros.visualizacao === visualizacao}
+                onClick={() => onChange({ ...filtros, visualizacao })}
+                className={`rounded-lg border px-3 py-1.5 text-sm font-semibold capitalize focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                  filtros.visualizacao === visualizacao
+                    ? 'border-blue-700 bg-blue-700 text-white'
+                    : 'border-slate-300 text-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                {visualizacao}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+      </div>
     </aside>
   )
 }
 
-function ListaProdutos({
-  filtros,
+function BuscaProdutos({
   busca,
   onBuscaChange,
 }: {
-  filtros: FiltrosCatalogo
   busca: string
   onBuscaChange: (busca: string) => void
 }) 
 {
+  return (
+    <>
+      <label htmlFor="busca-produtos" className="sr-only">
+        Buscar produtos por nome, tipo, valor ou código
+      </label>
+      <input
+        id="busca-produtos"
+        type="search"
+        value={busca}
+        onChange={(event) => onBuscaChange(event.target.value)}
+        placeholder="Buscar por nome, tipo, valor ou código de barras"
+        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200 lg:col-start-2 lg:row-start-1"
+      />
+    </>
+  )
+}
+
+function ListaProdutos({ filtros, busca }: { filtros: FiltrosCatalogo; busca: string }) {
   const produtosFiltrados = PRODUTOS.filter((produto) => {
     const termo = normalizarBusca(busca)
     const precoFormatado = formatarMoeda(produto.preco)
@@ -352,18 +403,7 @@ function ListaProdutos({
   })
 
   return (
-    <section aria-labelledby="titulo-produtos">
-      <label htmlFor="busca-produtos" className="sr-only">
-        Buscar produtos por nome, tipo, valor ou código
-      </label>
-      <input
-        id="busca-produtos"
-        type="search"
-        value={busca}
-        onChange={(event) => onBuscaChange(event.target.value)}
-        placeholder="Buscar por nome, tipo, valor ou código de barras"
-        className="mb-4 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200"
-      />
+    <section aria-labelledby="titulo-produtos" className="lg:col-start-2 lg:row-start-2">
       <h2 id="titulo-produtos" className="mb-3 text-lg font-semibold text-slate-900">
         Produtos
       </h2>
@@ -398,10 +438,11 @@ export default function App()
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Cabecalho />
-      <main className="mx-auto grid max-w-[1600px] gap-4 px-3 py-5 sm:px-4 lg:grid-cols-[200px_minmax(0,1fr)_260px] lg:gap-5 lg:py-6">
+      <main className="mx-auto grid max-w-[1600px] grid-cols-1 gap-4 px-3 py-5 sm:px-4 lg:grid-cols-[200px_minmax(0,1fr)_260px] lg:gap-5 lg:py-6">
+        <BuscaProdutos busca={busca} onBuscaChange={setBusca} />
         <CaixaFiltros filtros={filtros} onChange={setFiltros} />
-        <ListaProdutos filtros={filtros} busca={busca} onBuscaChange={setBusca} />
-        <div className="space-y-6">
+        <ListaProdutos filtros={filtros} busca={busca} />
+        <div className="space-y-6 lg:col-start-3 lg:row-span-2 lg:row-start-1">
           <CardPagamento />
           <ComoComprar />
         </div>

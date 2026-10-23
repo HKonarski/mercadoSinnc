@@ -49,11 +49,22 @@ describe('storefront', () => {
     const user = userEvent.setup()
     render(<App />)
 
+    const allCategories = screen.getByRole('button', { name: 'Todos' })
+    expect(allCategories).toHaveAttribute('aria-pressed', 'true')
+
     await user.click(screen.getByRole('checkbox', { name: 'Doces' }))
+    expect(allCategories).toHaveAttribute('aria-pressed', 'false')
     expect(screen.getByText('Biscoito recheado sabor chocolate com cobertura extra grande')).toBeInTheDocument()
     expect(screen.queryByText('Água mineral 500 ml')).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('checkbox', { name: 'Doces' }))
+    await user.click(allCategories)
+    expect(allCategories).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('Água mineral 500 ml')).toBeInTheDocument()
+
+    const moreFilters = screen.getByRole('button', { name: 'Mais filtros' })
+    await user.click(moreFilters)
+    expect(screen.getByRole('button', { name: 'Menos filtros' })).toHaveAttribute('aria-expanded', 'true')
+
     await user.click(screen.getByRole('checkbox', { name: 'Em estoque' }))
     expect(screen.queryByText('Pão de queijo')).not.toBeInTheDocument()
 
