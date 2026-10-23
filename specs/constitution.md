@@ -59,8 +59,9 @@ specs/
 ├── 003-codigo-barras/
 ├── 004-identificacao/
 ├── 005-pagamento/           # Pix, ficha e comprovante
-├── 006-historico-ficha/
-└── 007-admin/               # itens, estoque, comprovantes, baixa, contas
+├── 006-credito/             # recarga, saldo e extrato
+├── 007-historico-ficha/
+└── 008-admin/               # itens, estoque, comprovantes, baixa, contas
 ```
 Cada pasta de funcionalidade tem `spec.md`, `plan.md` e `tasks.md`.
 Requisitos são numerados (R1, R2...) e as tarefas indicam quais

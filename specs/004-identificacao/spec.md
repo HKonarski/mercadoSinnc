@@ -168,15 +168,15 @@ cada pessoa pode fazer.
 - Login por Google ou outros provedores
 - Promover outras contas a administrador (R14)
 - Tela de gestão de contas: as regras ficam definidas aqui, e a tela
-  entra na área do administrador (Feature 007)
+  entra na área do administrador (Feature 008)
 - Armazenamento real do comprovante (Fase 5)
 
 ## Dependências com outras features
 - **005 Pagamento:** a opção "Ficha" só fica habilitada se a conta tiver
   a permissão "Comprar na ficha" (R18)
-- **006 Histórico e valor pendente:** sempre consulta os dados do
+- **007 Histórico e valor pendente:** sempre consulta os dados do
   usuário logado (R13)
-- **007 Área do administrador:** abriga a tela de gestão de contas e a
+- **008 Área do administrador:** abriga a tela de gestão de contas e a
   baixa de valores pendentes (R22, R23)
 
 ## Observações

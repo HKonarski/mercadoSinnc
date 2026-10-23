@@ -81,8 +81,9 @@ specs/
 | 003 Leitura de código de barras | ⏳ | ⏳ | ⏳ |
 | 004 Identificação do usuário | ✅ | ⏳ | ⏳ |
 | 005 Pagamento (Pix, ficha e comprovante) | ⏳ | ⏳ | ⏳ |
-| 006 Histórico e valor pendente | ⏳ | ⏳ | ⏳ |
-| 007 Área do administrador | ⏳ | ⏳ | ⏳ |
+| 006 Crédito pré-pago | ✅ | ⏳ | ⏳ |
+| 007 Histórico e valor pendente | ⏳ | ⏳ | ⏳ |
+| 008 Área do administrador | ⏳ | ⏳ | ⏳ |
 
 ## Decisões importantes
 
