@@ -1,7 +1,9 @@
 # Feature 006: Crédito pré-pago
 
-Pontos marcados com **[a confirmar]** são propostas à espera de
-aprovação.
+**Situação:** evolução posterior. Entra depois das Features 005, 007 e
+008 (ordem de implementação definida na constitution), então as
+decisões em aberto abaixo podem esperar até lá. Pontos marcados com
+**[a confirmar]** são propostas à espera de aprovação.
 
 ## Objetivo
 Permitir que o usuário deixe um valor antecipado no mercadinho, pago via
@@ -151,7 +153,8 @@ por compra, e o mercadinho reduz o fiado.
 
 ## Dependências com outras features
 - **001 Catálogo e Constitution:** a lista de formas de pagamento passa
-  a ter três itens (Pix, Ficha e Crédito) quando esta spec for aprovada
+  a ter três itens (Pix, Ficha e Crédito) quando o crédito for
+  implementado
 - **002 Carrinho:** fornece o valor total da compra
 - **004 Identificação:** login obrigatório e regras de bloqueio (R17 e
   R21 da 004)

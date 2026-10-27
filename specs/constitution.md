@@ -124,10 +124,12 @@ Testes:
   verificação manual registrada
 
 ## Fluxo no Git
-- Uma branch por funcionalidade (`feature/001-catalogo`) ou por marco
-  (`feature/fase-2-pagina`)
-- Um commit por tarefa, com mensagem que cita a tarefa
-  (ex.: "T05: regras de estoque")
+- Uma branch por funcionalidade e por marco:
+01 - (`feature/001-catalogo`) 
+02 - (`feature/fase-2-pagina`)
+03 - (`feature/fase-3-componentização`)
+04 - (`feature/fase-4-Modelo JSON`-("verificar necessidade"))
+- Um commit por tarefa, com mensagem que cita a tarefa da uma conforme sua branch (ex.: "T05: regras de estoque")
 - Um PR por funcionalidade, com descrição ligada à spec
 
 ## Segurança e privacidade

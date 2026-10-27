@@ -1,6 +1,6 @@
-# Tarefas - Feature 001: Catálogo de produtos (v2)
+# Tarefas - Feature 001: Catálogo de produtos (v3)
 
-Alinhadas à spec v2 e ao plano v2.
+Alinhadas à spec v3 e ao plano v3.
 
 Regra: uma tarefa por commit. Só avança quando o "Pronto quando" for
 verdadeiro. Mensagem de commit sugerida: `T05: regras de estoque`.
@@ -60,16 +60,20 @@ Marque `[x]` ao concluir.
   ```powershell
   New-Item -ItemType Directory -Force src\components\catalogo, src\components\ui, src\types, src\services, src\data, src\utils, src\hooks, src\test
   ```
-- Criar em `src/types/index.ts`: `CATEGORIAS` (as const), `Categoria`,
-  `Produto` (com `categoria`), `Configuracao` (com
-  `limiteUltimasUnidades`), `FormaPagamento`, `FiltrosCatalogo` e
-  `Visualizacao` (separada dos filtros, decisão D11)
+- Criar em `src/types/index.ts`: `Categoria` (id e nome), `Produto`
+  (com `categoria`, `precoCentavos: number` em centavos inteiros,
+  `estoqueMinimo: number` onde 0 = sem mínimo e `ativo`, onde false =
+  oculto), `Configuracao` (com
+  `limiteUltimasUnidades`), `FormaPagamento`, `FiltrosCatalogo` (com
+  `categoriaIds`) e `Visualizacao` (separada dos filtros, decisão D11)
 - Pronto quando: o projeto compila sem erros de tipo
 
 ## Regras de negócio (funções puras, com testes)
 
 ### [ ] T03 - formatarMoeda
-- 3.5 -> "R$ 3,50"; 0 -> "R$ 0,00"; 1234.5 -> "R$ 1.234,50"
+- A função recebe **centavos** (decisão D2)
+- 350 -> "R$ 3,50"; 0 -> "R$ 0,00"; 123450 -> "R$ 1.234,50";
+  5 -> "R$ 0,05"
 - Pronto quando: os testes desses casos passam
 
 ### [ ] T04 - normalizarBusca
@@ -91,52 +95,72 @@ Marque `[x]` ao concluir.
   - aviso ligado + sem mínimo definido -> sem selo
   - aviso ligado + quantidade acima do mínimo -> sem selo
   - últimas unidades, aviso ligado, mínimo 6 e estoque 4 -> sim
+  - últimas unidades, aviso ligado, mínimo 6 e estoque 6 -> sim (o
+    limite é inclusivo)
+  - últimas unidades, aviso ligado, mínimo 6 e estoque 7 -> não
   - últimas unidades, sem mínimo, estoque 1 -> sim (limite padrão 3)
   - últimas unidades, sem mínimo, estoque 18 -> não
-  - últimas unidades, aviso desligado, mínimo 6 e estoque 5 -> não
-    (vale o limite padrão) **[depende da confirmação do R12]**
+  - últimas unidades, aviso desligado, mínimo 6 e estoque 5 -> só
+    entra se o limite padrão for maior ou igual a 5
+  - mínimo 0 e estoque 1 -> sem selo "Estoque baixo"; em últimas
+    unidades vale o limite padrão **[valor 0: a confirmar]**
+  - limite padrão 0, item sem mínimo e estoque 1 -> não entra em
+    últimas unidades **[valor 0: a confirmar]**
+  - limite padrão 5, item sem mínimo e estoque 5 -> entra
 - Pronto quando: todos passam (cobre R4, R5.1 a R5.4 e R12)
 
-### [ ] T06 - filtrarProdutos
+### [ ] T06 - filtrarProdutos e categoriasComItens
 - `filtrarProdutos(produtos, busca, filtros, config)` como função pura
   (decisão D10), usando `normalizarBusca` e as regras de T05
-- Busca em nome, categoria, código de barras e preço (formatos
-  "R$ 2,50", "2,50" e "2.5", decisão D4)
+- Busca **por trecho** em nome, categoria, código de barras e preço
+  (formatos "R$ 2,50", "2,50" e "2.5", decisão D4)
 - Filtros: categorias (vazio = todas), em estoque e últimas unidades,
   combinados entre si e com a busca
 - Testar, no mínimo:
   - "agua" encontra "Água mineral 500 ml" e não "Pão de queijo"
+  - "choco" encontra todo item com "choco" no nome ou na categoria
+  - um trecho do código traz os itens que o contêm
   - "salgados" traz só a categoria Salgados
-  - "R$ 2,50" traz só itens com esse preço
+  - "R$ 2,50" traz só itens com esse preço (250 centavos), e "2,50",
+    "2.50" e "2.5" também
   - código completo traz só o item
   - termo sem resultado devolve lista vazia
   - uma categoria, várias categorias e nenhuma
   - "Em estoque" remove itens com quantidade 0
   - "Últimas unidades" nos cenários da T05
   - busca + categoria ao mesmo tempo
+- `categoriasComItens(categorias, produtos)`: devolve só as categorias
+  com pelo menos um item visível **[a confirmar]**
 - Pronto quando: os testes passam (cobre R3 e R11)
 
 ## Dados
 
 ### [ ] T07 - Dados mock
 - Criar ~10 produtos em `data/produtos.mock.ts` cobrindo:
-  - as 4 categorias (Doces, Salgados, Bebidas, Chocolates)
+  - categorias como dados separados dos itens (Doces, Salgados,
+    Bebidas e Chocolates como exemplo), incluindo uma categoria sem
+    nenhum item visível
   - item com estoque 0
   - item com mínimo definido e estoque igual ou abaixo dele
   - item com mínimo definido e estoque folgado
   - item sem mínimo, com estoque baixo (1 a 3) e com estoque alto
+  - preços em centavos inteiros (ex.: 250, 1190), incluindo valores
+    que dariam erro em decimais (ex.: 10 e 20 centavos)
   - nome com acento ("Água", "Pão de queijo")
   - nome muito longo
-  - item inativo (não deve aparecer)
+  - item oculto (`ativo: false`, não deve aparecer)
+  - item com mínimo 0 (sem mínimo)
 - Pronto quando: os dados compilam e respeitam o tipo `Produto`
 
 ### [ ] T08 - Camada de serviço
 - `ProdutosService` (interface) com implementação mock, atraso simulado
   (~500 ms) e um modo para forçar erro
+- `CategoriasService` mock (categorias cadastradas pelo
+  administrador)
 - `ConfiguracaoService` mock (aviso de estoque mínimo, limite de
   últimas unidades e chave Pix)
-- Retornar só produtos ativos
-- Pronto quando: um teste chama o serviço e recebe só os ativos
+- Retornar só produtos visíveis, ou seja, `ativo: true` (R14)
+- Pronto quando: um teste chama o serviço e recebe só os visíveis
 
 ## Hooks
 
@@ -170,12 +194,16 @@ Marque `[x]` ao concluir.
 - Pronto quando: renderiza os 4 casos (normal, indisponível, estoque
   baixo, nome longo)
 
-### [ ] T13 - BuscaProdutos e CaixaFiltros
+### [ ] T13 - BuscaProdutos, CaixaFiltros e FiltrosRecolhiveis
 - Campo de busca com rótulo para leitor de tela
 - Caixa de filtros: categorias, "Em estoque", "Últimas unidades" e
   botões de visualização (grade e lista, com `aria-pressed`)
+- Lista de categorias do filtro vinda de `categoriasComItens`
+- `FiltrosRecolhiveis` (decisão D14): botão "Filtros" com
+  `aria-expanded`, visível só em telas pequenas; em telas grandes a
+  caixa fica sempre visível. Breakpoint conforme os wireframes
 - Pronto quando: cada controle altera o estado esperado e tem rótulo
-  acessível
+  acessível, e o painel abre e fecha no celular sem perder os filtros
 
 ### [ ] T14 - ListaProdutos
 - Grade ou lista conforme a visualização escolhida
@@ -203,8 +231,9 @@ Marque `[x]` ao concluir.
 ### [ ] T17 - Responsividade
 - Mobile-first, ajustando mobile, tablet e desktop (R9), alinhado aos
   wireframes da Fase 1
-- Aplicar a decisão sobre os filtros no celular (botão "Filtros" que
-  recolhe a caixa, se aprovado na spec)
+- Conferir o painel de filtros recolhível no celular e visível em
+  telas maiores, seguindo os wireframes (`docs/wireframe-mobile`,
+  `-tablet` e `-desktop`), inclusive o comportamento no tablet
 - Pronto quando: sem rolagem horizontal em 360 px, 768 px e 1280 px
 
 ### [ ] T18 - Acessibilidade e revisão final
@@ -223,11 +252,14 @@ Marque `[x]` ao concluir.
 ### Listagem e busca
 - [ ] Todos os itens ativos aparecem com categoria, nome, preço e
       quantidade
-- [ ] Preço 3.5 aparece como "R$ 3,50"
+- [ ] Preço de 350 centavos aparece como "R$ 3,50"
 - [ ] Busca "agua" encontra "Água" e não "Pão de queijo"
 - [ ] Busca "salgados" traz só a categoria Salgados
 - [ ] Busca "R$ 2,50" traz só os itens com esse preço
-- [ ] Busca pelo código completo traz só o item
+- [ ] Busca "choco" traz todos os itens com "choco" no nome ou na
+      categoria
+- [ ] Busca por trecho do código traz os itens que o contêm
+- [ ] Busca pelo código completo traz o item
 - [ ] Busca sem resultado mostra "Nenhum produto encontrado para esses
       filtros."
 - [ ] Limpar a busca restaura a lista
@@ -237,10 +269,14 @@ Marque `[x]` ao concluir.
       restaura
 - [ ] "Em estoque" esconde itens com estoque 0
 - [ ] "Últimas unidades" nos cenários da spec (inclusive com aviso
-      desligado)
+      desligado, limite padrão alterado e limite 0)
+- [ ] Categoria sem item visível não aparece nos filtros
 - [ ] Busca e filtro juntos mostram só o que atende aos dois
 - [ ] Visualização inicial é grade; "lista" muda o formato, fica
       marcada e mantém os mesmos itens
+- [ ] No celular os filtros ficam recolhidos atrás do botão
+      "Filtros"; em telas grandes a caixa fica visível
+- [ ] Item oculto não aparece na lista, na busca nem nos filtros
 
 ### Estoque e pagamento
 - [ ] Estoque 0: "Indisponível" e botão desabilitado
@@ -262,7 +298,9 @@ Marque `[x]` ao concluir.
 | R4, R5 | T05, T12 |
 | R6, R7 | T15 |
 | R9 | T17 |
-| R10 | T02, T07, T12 |
+| R10 | T02, T07, T08, T12 |
 | R11 | T06, T10, T13 |
 | R12 | T05, T06 |
 | R13 | T10, T13, T14 |
+| R14 | T02, T07, T08 |
+| R15 | T13, T17 |
