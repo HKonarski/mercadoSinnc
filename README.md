@@ -54,8 +54,9 @@ npm run lint     # verifica o código
 | Fase | Entrega | Situação |
 |---|---|---|
 | 1 | Wireframes mobile, tablet e desktop | ✅ Entregue |
-| 2 | Página no `App.tsx` com Tailwind CSS | 🚧 Em andamento |
-| 3 e 4 | Evolução do front-end em React, TypeScript e Tailwind | ⏳ Planejado |
+| 2 | Página no `App.tsx` com Tailwind CSS |  ✅ Entregue |
+| 3 | Evolução do front-end em React, TypeScript e Tailwind | ⏳ Planejado (06/11)|
+| 4 | Leitura de dados de um JSON externo (13/11) | ⏳ Planejado |
 | 5 e 6 | Back-end em Java e banco de dados SQL | ⏳ Planejado |
 
 ## Como o projeto é desenvolvido (SDD)
@@ -77,12 +78,13 @@ specs/
 | Funcionalidade | Spec | Plano | Tarefas |
 |---|---|---|---|
 | 001 Catálogo de produtos | ✅ | ✅ | ✅ |
-| 002 Carrinho | ⏳ | ⏳ | ⏳ |
-| 003 Leitura de código de barras | ⏳ | ⏳ | ⏳ |
+| 002 Carrinho | ✅ | ⏳ | ⏳ |
+| 003 Leitura de código de barras | ✅ | ⏳ | ⏳ |
 | 004 Identificação do usuário | ✅ | ⏳ | ⏳ |
 | 005 Pagamento (Pix, ficha e comprovante) | ⏳ | ⏳ | ⏳ |
-| 006 Histórico e valor pendente | ⏳ | ⏳ | ⏳ |
-| 007 Área do administrador | ⏳ | ⏳ | ⏳ |
+| 006 Crédito pré-pago (evolução)| ✅ | ⏳ | ⏳ |
+| 007 Histórico e valor pendente | ⏳ | ⏳ | ⏳ |
+| 008 Área do administrador | ⏳ | ⏳ | ⏳ |
 
 ## Decisões importantes
 

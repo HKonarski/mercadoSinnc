@@ -1,0 +1,151 @@
+{
+  "planHash": "ec5269936c73c9626fd402af34ba2857eb90e4a3f2ad7b1992db169dbf66ac79",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-10-22T17:40:50.3890893Z",
+  "retryCount": 4,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 5301,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "app-build",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E mercado-sinnc@0.1.0 build\r\n\u003E tsc --noEmit \u0026\u0026 vite build\r\n\r\n\u001B[36mvite v6.4.5 \u001B[32mbuilding for production...\u001B[36m\u001B[39m\r\ntransforming...\r\n\u001B[32m\u2713\u001B[39m 27 modules transformed.\r\nrendering chunks...\r\ncomputing gzip size...\r\n\u001B[2mdist/\u001B[22m\u001B[32mindex.html                 \u001B[39m\u001B[1m\u001B[2m  0.46 kB\u001B[22m\u001B[1m\u001B[22m\u001B[2m \u2502 gzip:  0.30 kB\u001B[22m\r\n\u001B[2mdist/\u001B[22m\u001B[35massets/index-DzUpG1KS.css  \u001B[39m\u001B[1m\u001B[2m 13.49 kB\u001B[22m\u001B[1m\u001B[22m\u001B[2m \u2502 gzip:  3.48 kB\u001B[22m\r\n\u001B[2mdist/\u001B[22m\u001B[36massets/index-DuoVbG2U.js   \u001B[39m\u001B[1m\u001B[2m150.05 kB\u001B[22m\u001B[1m\u001B[22m\u001B[2m \u2502 gzip: 48.27 kB\u001B[22m\r\n\u001B[32m\u2713 built in 1.42s\u001B[39m\r\n",
+        "durationMs": 5243
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E mercado-sinnc@0.1.0 test\r\n\u003E vitest run\r\n\r\n\r\n\u001B[1m\u001B[7m\u001B[36m RUN \u001B[39m\u001B[27m\u001B[22m \u001B[36mv2.1.9 \u001B[39m\u001B[90mC:/Users/SINNC/Documents/unimater/mercadoSinnc\u001B[39m\r\n\r\n \u001B[32m\u2713\u001B[39m src/test/App.test.tsx \u001B[2m(\u001B[22m\u001B[2m2 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[33m 321\u001B[2mms\u001B[22m\u001B[39m\r\n\r\n\u001B[2m Test Files \u001B[22m \u001B[1m\u001B[32m1 passed\u001B[39m\u001B[22m\u001B[90m (1)\u001B[39m\r\n\u001B[2m      Tests \u001B[22m \u001B[1m\u001B[32m2 passed\u001B[39m\u001B[22m\u001B[90m (2)\u001B[39m\r\n\u001B[2m   Start at \u001B[22m 14:40:44\r\n\u001B[2m   Duration \u001B[22m 2.76s\u001B[2m (transform 97ms, setup 371ms, collect 86ms, tests 321ms, environment 1.21s, prepare 226ms)\u001B[22m\r\n\r\n",
+        "durationMs": 4569,
+        "testResults": {
+          "testFramework": "vitest",
+          "runnerDetectedFrom": "package_json",
+          "testsTotal": 2,
+          "testsPassed": 2,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": false
+        }
+      },
+      {
+        "name": "lint-pass",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E mercado-sinnc@0.1.0 lint\r\n\u003E eslint .\r\n\r\n",
+        "durationMs": 3007
+      },
+      {
+        "name": "app-home-200",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!doctype html\u003E\r\n\u003Chtml lang=\u0022pt-BR\u0022\u003E\r\n  \u003Chead\u003E\n    \u003Cscript type=\u0022module\u0022\u003Eimport { injectIntoGlobalHook } from \u0022/@react-refresh\u0022;\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () =\u003E {};\nwindow.$RefreshSig$ = () =\u003E (type) =\u003E type;\u003C/script\u003E\n\n    \u003Cscript type=\u0022module\u0022 src=\u0022/@vite/client\u0022\u003E\u003C/script\u003E\n\r\n    \u003Cmeta charset=\u0022UTF-8\u0022 /\u003E\r\n    \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1.0\u0022 /\u003E\r\n    \u003Cmeta name=\u0022theme-color\u0022 content=\u0022#f8fafc\u0022 /\u003E\r\n    \u003Ctitle\u003EMercado SINNC\u003C/title\u003E\r\n  \u003C/head\u003E\r\n  \u003Cbody\u003E\r\n    \u003Cdiv id=\u0022root\u0022\u003E\u003C/div\u003E\r\n    \u003Cscript type=\u0022module\u0022 src=\u0022/src/main.tsx?t=1792690832210\u0022\u003E\u003C/script\u003E\r\n  \u003C/body\u003E\r\n\u003C/html\u003E\r\n",
+        "durationMs": 13
+      }
+    ],
+    "executions": [
+      {
+        "source": "setup[0]",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "install",
+          "--no-package-lock"
+        ],
+        "cwd": "C:\\Users\\SINNC\\Documents\\unimater\\mercadoSinnc",
+        "env": {},
+        "prependPath": [
+          "C:\\Program Files\\nodejs"
+        ],
+        "platform": "win32"
+      },
+      {
+        "source": "app-build",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "run",
+          "build"
+        ],
+        "cwd": "C:\\Users\\SINNC\\Documents\\unimater\\mercadoSinnc",
+        "env": {},
+        "prependPath": [
+          "C:\\Program Files\\nodejs"
+        ],
+        "platform": "win32"
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "test"
+        ],
+        "cwd": "C:\\Users\\SINNC\\Documents\\unimater\\mercadoSinnc",
+        "env": {},
+        "prependPath": [
+          "C:\\Program Files\\nodejs"
+        ],
+        "platform": "win32"
+      },
+      {
+        "source": "lint-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "run",
+          "lint"
+        ],
+        "cwd": "C:\\Users\\SINNC\\Documents\\unimater\\mercadoSinnc",
+        "env": {},
+        "prependPath": [
+          "C:\\Program Files\\nodejs"
+        ],
+        "platform": "win32"
+      },
+      {
+        "source": "app-home-200",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+          "run",
+          "dev",
+          "--",
+          "--host",
+          "127.0.0.1"
+        ],
+        "cwd": "C:\\Users\\SINNC\\Documents\\unimater\\mercadoSinnc",
+        "env": {},
+        "prependPath": [
+          "C:\\Program Files\\nodejs"
+        ],
+        "platform": "win32"
+      }
+    ]
+  }
+}

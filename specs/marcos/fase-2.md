@@ -34,20 +34,20 @@ Do wireframe da Fase 1:
 - "Copiar Chave Pix" copia a chave, sem outro efeito
 
 ## Critérios de aceite
-- [ ] Cabeçalho com logo SINNC e ícone "Usuario"
-- [ ] Card de pagamento com "R$ Valor", "Copiar Chave Pix" e
+- [x] Cabeçalho com logo SINNC e ícone "Usuário"
+- [x] Card de pagamento com "R$ Valor", "Copiar Chave Pix" e
       "Registrar na Ficha"
-- [ ] "Como comprar" com Histórico de Compra, Valor Pendente na Ficha
+- [x] "Como comprar" com Histórico de Compra, Valor Pendente na Ficha
       e Registro de Comprovante
-- [ ] Lista mostra nome, preço no formato "R$ 0,00", quantidade e
+- [x] Lista mostra nome, preço no formato "R$ 0,00", quantidade e
       código de barras
-- [ ] Item com estoque 0 aparece "Indisponível" e o botão fica
+- [x] Item com estoque 0 aparece "Indisponível" e o botão fica
       desabilitado
-- [ ] Item com estoque igual ou abaixo do mínimo mostra "Estoque baixo"
-- [ ] Só Pix e Ficha aparecem como formas de pagamento
-- [ ] Sem rolagem horizontal em 360, 768 e 1280 px
-- [ ] Usa somente Tailwind (sem CSS próprio) e não usa `any`
-- [ ] `npm run build` e `npm run lint` sem erros
+- [x] Item com estoque igual ou abaixo do mínimo mostra "Estoque baixo"
+- [x] Só Pix e Ficha aparecem como formas de pagamento
+- [x] Sem rolagem horizontal em 360, 768 e 1280 px
+- [x] Usa somente Tailwind (sem CSS próprio) e não usa `any`
+- [x] `npm run build` e `npm run lint` sem erros
 
 ## Tarefas
 - F2-01 Estrutura da página e cabeçalho
