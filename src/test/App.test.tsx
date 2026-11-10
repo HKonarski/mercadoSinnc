@@ -84,6 +84,44 @@ describe('catálogo', () => {
     expect(screen.getByText('Ficha', { exact: true })).toBeInTheDocument()
   })
 
+  it('exibe pagamento e como comprar somente após selecionar pelo menu', async () => {
+    const user = userEvent.setup()
+    await abrirCatalogo()
+
+    const abrirNavegacao = screen.getByRole('button', {
+      name: 'Abrir navegação',
+    })
+    expect(abrirNavegacao).toHaveAttribute('aria-expanded', 'false')
+    expect(abrirNavegacao).toHaveClass('lg:hidden')
+
+    await user.click(abrirNavegacao)
+    expect(
+      screen.getByRole('navigation', { name: 'Navegação do catálogo' }),
+    ).toBeVisible()
+    expect(
+      screen.getByRole('button', { name: 'Fechar navegação' }),
+    ).toHaveAttribute('aria-expanded', 'true')
+
+    await user.click(screen.getByRole('button', { name: 'Pagamento' }))
+    expect(screen.getByRole('heading', { name: 'Pagamento' })).toBeVisible()
+    expect(
+      screen.queryByRole('heading', { name: 'Produtos' }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', { name: 'Como comprar' }),
+    ).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Abrir navegação' }))
+    await user.click(screen.getByRole('button', { name: 'Como comprar' }))
+    expect(screen.getByRole('heading', { name: 'Como comprar' })).toBeVisible()
+    expect(
+      screen.queryByRole('heading', { name: 'Pagamento' }),
+    ).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Voltar ao catálogo' }))
+    expect(screen.getByRole('heading', { name: 'Produtos' })).toBeVisible()
+  })
+
   it('copia a chave Pix e confirma a ação', async () => {
     const user = userEvent.setup()
     const writeText = vi.fn().mockResolvedValue(undefined)

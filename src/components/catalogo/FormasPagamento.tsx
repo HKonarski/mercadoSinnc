@@ -36,8 +36,9 @@ export function FormasPagamento({
 
   return (
     <section
+      id="secao-pagamento"
       aria-labelledby="titulo-pagamento"
-      className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+      className="scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
     >
       <h2
         id="titulo-pagamento"

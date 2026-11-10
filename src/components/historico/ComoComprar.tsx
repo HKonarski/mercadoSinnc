@@ -23,8 +23,9 @@ export function ComoComprar({
 }) {
   return (
     <section
+      id="secao-como-comprar"
       aria-labelledby="titulo-como-comprar"
-      className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+      className="scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
     >
       <h2
         id="titulo-como-comprar"
