@@ -39,7 +39,7 @@ export function ProdutoCard({
         <p className="text-sm text-slate-600">
           Disponível: {produto.quantidade}
         </p>
-        <p className="mt-1 text-xs text-slate-400">
+        <p className="mt-1 text-xs text-slate-600">
           Cód. {produto.codigoBarras}
         </p>
       </div>

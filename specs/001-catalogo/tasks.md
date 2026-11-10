@@ -236,7 +236,7 @@ Marque `[x]` ao concluir.
   `-tablet` e `-desktop`), inclusive o comportamento no tablet
 - Pronto quando: sem rolagem horizontal em 360 px, 768 px e 1280 px
 
-### [ ] T18 - Acessibilidade e revisão final
+### [x] T18 - Acessibilidade e revisão final
 - Labels nos campos, foco visível, navegação por teclado, contraste
 - Percorrer os critérios de aceite da spec v3 um a um (checklist abaixo)
 - Pronto quando: todos os itens do checklist estão marcados
@@ -284,44 +284,44 @@ Marque `[x]` ao concluir.
 ## Checklist de aceite (T18)
 
 ### Listagem e busca
-- [ ] Todos os itens ativos aparecem com categoria, nome, preço e
+- [x] Todos os itens ativos aparecem com categoria, nome, preço e
       quantidade
-- [ ] Preço de 350 centavos aparece como "R$ 3,50"
-- [ ] Busca "agua" encontra "Água" e não "Pão de queijo"
-- [ ] Busca "salgados" traz só a categoria Salgados
-- [ ] Busca "R$ 2,50" traz só os itens com esse preço
-- [ ] Busca "choco" traz todos os itens com "choco" no nome ou na
+- [x] Preço de 350 centavos aparece como "R$ 3,50"
+- [x] Busca "agua" encontra "Água" e não "Pão de queijo"
+- [x] Busca "salgados" traz só a categoria Salgados
+- [x] Busca "R$ 2,50" traz só os itens com esse preço
+- [x] Busca "choco" traz todos os itens com "choco" no nome ou na
       categoria
-- [ ] Busca por trecho do código traz os itens que o contêm
-- [ ] Busca pelo código completo traz o item
-- [ ] Busca sem resultado mostra "Nenhum produto encontrado para esses
+- [x] Busca por trecho do código traz os itens que o contêm
+- [x] Busca pelo código completo traz o item
+- [x] Busca sem resultado mostra "Nenhum produto encontrado para esses
       filtros."
-- [ ] Limpar a busca restaura a lista
+- [x] Limpar a busca restaura a lista
 
 ### Filtros e visualização
-- [ ] Filtro de categoria mostra só a categoria marcada e desmarcar
+- [x] Filtro de categoria mostra só a categoria marcada e desmarcar
       restaura
-- [ ] "Em estoque" esconde itens com estoque 0
-- [ ] "Últimas unidades" nos cenários da spec (inclusive com aviso
+- [x] "Em estoque" esconde itens com estoque 0
+- [x] "Últimas unidades" nos cenários da spec (inclusive com aviso
       desligado, limite padrão alterado e limite 0)
-- [ ] Categoria sem item visível não aparece nos filtros
-- [ ] Busca e filtro juntos mostram só o que atende aos dois
-- [ ] Visualização inicial é grade; "lista" muda o formato, fica
+- [x] Categoria sem item visível não aparece nos filtros
+- [x] Busca e filtro juntos mostram só o que atende aos dois
+- [x] Visualização inicial é grade; "lista" muda o formato, fica
       marcada e mantém os mesmos itens
-- [ ] No celular os filtros ficam recolhidos atrás do botão
+- [x] No celular os filtros ficam recolhidos atrás do botão
       "Filtros"; em telas grandes a caixa fica visível
-- [ ] Item oculto não aparece na lista, na busca nem nos filtros
+- [x] Item oculto não aparece na lista, na busca nem nos filtros
 
 ### Estoque e pagamento
-- [ ] Estoque 0: "Indisponível" e botão desabilitado
-- [ ] Aviso desligado: nenhum "Estoque baixo"
-- [ ] Aviso ligado com mínimo 5 e estoque 5: "Estoque baixo"
-- [ ] Aviso ligado e sem mínimo: nenhum selo de estoque baixo
-- [ ] Pagamento mostra apenas Pix e Ficha
+- [x] Estoque 0: "Indisponível" e botão desabilitado
+- [x] Aviso desligado: nenhum "Estoque baixo"
+- [x] Aviso ligado com mínimo 5 e estoque 5: "Estoque baixo"
+- [x] Aviso ligado e sem mínimo: nenhum selo de estoque baixo
+- [x] Pagamento mostra apenas Pix e Ficha
 
 ### Estados
-- [ ] Erro de carregamento mostra mensagem e "Tentar de novo"
-- [ ] Catálogo vazio mostra "Nenhum item cadastrado ainda"
+- [x] Erro de carregamento mostra mensagem e "Tentar de novo"
+- [x] Catálogo vazio mostra "Nenhum item cadastrado ainda"
 
 ## Rastreabilidade
 | Requisito | Tarefas |

@@ -69,7 +69,7 @@ O servidor remoto precisa permitir requisições CORS.
 |---|---|---|
 | 1 | Wireframes mobile, tablet e desktop | ✅ Entregue |
 | 2 | Página no `App.tsx` com Tailwind CSS | ✅ Entregue |
-| 3 | Componentes, serviços, hooks e regras do catálogo | ✅ Implementação concluída; aceite final/PR pendentes |
+| 3 | Componentes, serviços, hooks e regras do catálogo | ✅ Implementação e aceite concluídos; PR pendente |
 | 4 | Leitura do catálogo a partir de JSON | ✅ Implementação concluída; aceite final/PR pendentes |
 | 5 e 6 | Back-end em Java e banco de dados SQL | ⏳ Planejado |
 

@@ -4,6 +4,8 @@ Entrega prevista: 06/11/2026 (cronograma do professor).
 
 Branch: `feature/fase-3-componentes`.
 
+Situação: **aceite concluído; PR de entrega pendente**.
+
 ## Objetivo
 Refatorar a página provisória da Fase 2 (toda no `App.tsx`) para uma
 estrutura de **componentes**, com **dados** vindos de uma camada de
@@ -57,11 +59,22 @@ Da Feature 001 (Catálogo de produtos), versão 3:
 - [x] Preço em centavos inteiros em todo o código
 - [x] Comportamento da Fase 2 preservado: `App.test.tsx` passa
       (já assíncrono, com o carregamento)
-- [ ] Checklist de aceite do catálogo (T18) percorrido
+- [x] Checklist de aceite do catálogo (T18) percorrido
 - [x] `npm test`, `npm run build`, `npm run lint` e `npm run format`
       sem erros
 - [x] README atualizado
 - [ ] PR aberto
+
+### Evidências do aceite T18
+
+- 28 testes automatizados passaram; build e lint passaram.
+- A conferência em navegador nas larguras 360, 768 e 1280 px não
+  encontrou rolagem horizontal; os filtros recolhem no celular e ficam
+  visíveis no desktop.
+- Busca, filtros, estoque, visualizações, estados vazio/erro e formas de
+  pagamento foram conferidos.
+- Navegação por teclado e rótulos acessíveis foram verificados; o texto
+  secundário do rodapé tem contraste 6,15:1.
 
 ## Mapa da refatoração
 | Bloco no `App.tsx` da Fase 2 | Vira |
