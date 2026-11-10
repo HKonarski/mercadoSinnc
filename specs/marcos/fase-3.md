@@ -1,10 +1,10 @@
 # Marco: Fase 3 - Componentes, dados e estado
 
-Entrega prevista: 06/11/2026 (cronograma do professor).
+Entrega prevista: 13/11/2026 (cronograma atualizado do professor).
 
 Branch: `feature/fase-3-componentes`.
 
-Situação: **aceite concluído; PR de entrega pendente**.
+Situação: **aceite concluído; PR de entrega pendente; dentro do prazo**.
 
 ## Objetivo
 Refatorar a página provisória da Fase 2 (toda no `App.tsx`) para uma
@@ -67,7 +67,7 @@ Da Feature 001 (Catálogo de produtos), versão 3:
 
 ### Evidências do aceite T18
 
-- 28 testes automatizados passaram; build e lint passaram.
+- 29 testes automatizados passaram; build e lint passaram.
 - A conferência em navegador nas larguras 360, 768 e 1280 px não
   encontrou rolagem horizontal; os filtros recolhem no celular e ficam
   visíveis no desktop.
@@ -94,7 +94,7 @@ Da Feature 001 (Catálogo de produtos), versão 3:
 | `ComoComprar` | componente próprio; decidir o lugar na spec de histórico |
 
 ## Cronograma sugerido
-A fase vence em 06/11. Esta é uma divisão possível; ajuste ao seu
+A fase vence em 13/11. Esta é uma divisão possível; ajuste ao seu
 ritmo.
 
 | Período | Tarefas |
@@ -104,7 +104,7 @@ ritmo.
 | 31/10 a 02/11 | T07, T08, T09 e T10 |
 | 03 a 04/11 | T11, T12, T13 e T14 |
 | 05/11 | T15, T16 e T17 |
-| 06/11 | T18 e T19 (conferência e entrega) |
+| 13/11 | T18 e T19 (conferência e entrega) |
 
 ## Riscos e pontos a confirmar
 - **"Estado" e o carrinho:** o PDF diz "uso de dados e estado". Busca,
@@ -117,6 +117,6 @@ ritmo.
 - **Wireframes:** os três tamanhos foram conferidos e o comportamento
   dos filtros no mobile, tablet e desktop foi registrado em
   `marcos/fase-1.md`.
-- **Prazo curto:** se faltar tempo, cortar nesta ordem: R15, depois
-  a T18 detalhada (acessibilidade). Os testes unitários (T03 a T06) e
-  a separação em componentes não são cortáveis.
+- **Prazo atualizado:** a entrega foi remarcada para 13/11/2026; a fase
+  está dentro do prazo. Os testes unitários (T03 a T06) e a separação em
+  componentes permanecem critérios essenciais.
