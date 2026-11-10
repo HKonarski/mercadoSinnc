@@ -48,6 +48,15 @@ afterEach(() => {
 })
 
 describe('catálogo', () => {
+  it('exibe o rodapé com a mensagem sobre pagamentos via PIX', async () => {
+    await abrirCatalogo()
+
+    expect(screen.getByText('Rodapé: Mercadinho da SINNC')).toBeInTheDocument()
+    expect(
+      screen.getByText('Pagamentos somente via PIX · Volte sempre!'),
+    ).toBeInTheDocument()
+  })
+
   it('carrega produtos e informações de pagamento do JSON', async () => {
     render(<App />)
 

@@ -5,6 +5,7 @@ import type { Catalogo, FiltrosCatalogo, Visualizacao } from '../../types'
 import { categoriasComItens } from '../../utils/categoriasComItens'
 import { Carregando } from '../ui/Carregando'
 import { Erro } from '../ui/Erro'
+import { Rodape } from '../ui/Rodape'
 import { EnviarComprovante } from '../historico/EnviarComprovante'
 import { ComoComprar } from '../historico/ComoComprar'
 import { ListaHistorico } from '../historico/ListaHistorico'
@@ -87,9 +88,9 @@ function PaginaCatalogo({
     setVisualizacao(proxima)
 
   return (
-    <div className="min-h-screen min-w-0 bg-slate-50 text-slate-900">
+    <div className="flex min-h-screen min-w-0 flex-col bg-slate-50 text-slate-900">
       <Cabecalho />
-      <main className="mx-auto grid min-w-0 max-w-[1600px] grid-cols-1 gap-4 px-3 py-5 sm:px-4 lg:grid-cols-[200px_minmax(0,1fr)_260px] lg:gap-5 lg:py-6">
+      <main className="mx-auto grid min-w-0 max-w-[1600px] flex-1 grid-cols-1 gap-4 px-3 py-5 sm:px-4 lg:grid-cols-[200px_minmax(0,1fr)_260px] lg:gap-5 lg:py-6">
         <BuscaProdutos busca={busca} onBuscaChange={setBusca} />
         <CaixaFiltros
           categorias={categorias}
@@ -109,6 +110,7 @@ function PaginaCatalogo({
           <ComoComprar abrirTela={abrirTela} />
         </div>
       </main>
+      <Rodape />
     </div>
   )
 }
