@@ -9,6 +9,9 @@
     { "id": "salgados", "nome": "Salgados" },
     { "id": "doces", "nome": "Doces" },
     { "id": "chocolates", "nome": "Chocolates" },
+    { "id": "salgadinhos", "nome": "Salgadinhos" },
+    { "id": "biscoitos", "nome": "Biscoitos" },
+    { "id": "laticinios", "nome": "Laticínios" },
     { "id": "sem-produtos", "nome": "Sem produtos visíveis" }
   ],
   "produtos": [
@@ -90,6 +93,236 @@
       "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "7891000000080",
+      "ativo": true
+    },
+    {
+      "id": "10",
+      "nome": "Doritos 32gr",
+      "categoriaId": "salgadinhos",
+      "precoCentavos": 415,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-DORITOS-32GR",
+      "ativo": true
+    },
+    {
+      "id": "11",
+      "nome": "Ruffles 68gr",
+      "categoriaId": "salgadinhos",
+      "precoCentavos": 899,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-RUFFLES-68GR",
+      "ativo": true
+    },
+    {
+      "id": "12",
+      "nome": "Torcida 35gr",
+      "categoriaId": "salgadinhos",
+      "precoCentavos": 189,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-TORCIDA-35GR",
+      "ativo": true
+    },
+    {
+      "id": "13",
+      "nome": "Biscoito Flay",
+      "categoriaId": "biscoitos",
+      "precoCentavos": 349,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-BISCOITO-FLAY",
+      "ativo": true
+    },
+    {
+      "id": "14",
+      "nome": "Snickers",
+      "categoriaId": "chocolates",
+      "precoCentavos": 498,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-SNICKERS",
+      "ativo": true
+    },
+    {
+      "id": "15",
+      "nome": "Bis Extra",
+      "categoriaId": "chocolates",
+      "precoCentavos": 549,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-BIS-EXTRA",
+      "ativo": true
+    },
+    {
+      "id": "16",
+      "nome": "Kit Kat",
+      "categoriaId": "chocolates",
+      "precoCentavos": 425,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-KIT-KAT",
+      "ativo": true
+    },
+    {
+      "id": "17",
+      "nome": "Talento",
+      "categoriaId": "chocolates",
+      "precoCentavos": 899,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-TALENTO",
+      "ativo": true
+    },
+    {
+      "id": "18",
+      "nome": "Chocolate Nestle 80gr",
+      "categoriaId": "chocolates",
+      "precoCentavos": 849,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-CHOCOLATE-NESTLE-80GR",
+      "ativo": true
+    },
+    {
+      "id": "19",
+      "nome": "Cookies",
+      "categoriaId": "biscoitos",
+      "precoCentavos": 380,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-COOKIES",
+      "ativo": true
+    },
+    {
+      "id": "20",
+      "nome": "Iogurte Frimesa",
+      "categoriaId": "laticinios",
+      "precoCentavos": 298,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-IOGURTE-FRIMESA",
+      "ativo": true
+    },
+    {
+      "id": "21",
+      "nome": "Wafer Bauducco 140g",
+      "categoriaId": "biscoitos",
+      "precoCentavos": 359,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-WAFER-BAUDUCCO-140G",
+      "ativo": true
+    },
+    {
+      "id": "22",
+      "nome": "Bolinho Rollcake 34g",
+      "categoriaId": "biscoitos",
+      "precoCentavos": 319,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-BOLINHO-ROLLCAKE-34G",
+      "ativo": true
+    },
+    {
+      "id": "23",
+      "nome": "Chocolate Suflair 80gr",
+      "categoriaId": "chocolates",
+      "precoCentavos": 849,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-CHOCOLATE-SUFLAIR-80GR",
+      "ativo": true
+    },
+    {
+      "id": "24",
+      "nome": "Chocolate Lacta 80gr",
+      "categoriaId": "chocolates",
+      "precoCentavos": 690,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-CHOCOLATE-LACTA-80GR",
+      "ativo": true
+    },
+    {
+      "id": "25",
+      "nome": "Coca Cola 350 ml",
+      "categoriaId": "bebidas",
+      "precoCentavos": 379,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-COCA-COLA-350ML",
+      "ativo": true
+    },
+    {
+      "id": "26",
+      "nome": "Sprite Zero 350 ml",
+      "categoriaId": "bebidas",
+      "precoCentavos": 379,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-SPRITE-ZERO-350ML",
+      "ativo": true
+    },
+    {
+      "id": "27",
+      "nome": "H2OH Limonetto 500 ml",
+      "categoriaId": "bebidas",
+      "precoCentavos": 489,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-H2OH-LIMONETTO-500ML",
+      "ativo": true
+    },
+    {
+      "id": "28",
+      "nome": "Suco Prats 300 ml",
+      "categoriaId": "bebidas",
+      "precoCentavos": 699,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-SUCO-PRATS-300ML",
+      "ativo": true
+    },
+    {
+      "id": "29",
+      "nome": "Redbull 250 ml",
+      "categoriaId": "bebidas",
+      "precoCentavos": 899,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-REDBULL-250ML",
+      "ativo": true
+    },
+    {
+      "id": "30",
+      "nome": "Monster 473 ml",
+      "categoriaId": "bebidas",
+      "precoCentavos": 999,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-MONSTER-473ML",
+      "ativo": true
+    },
+    {
+      "id": "31",
+      "nome": "Heineken",
+      "categoriaId": "bebidas",
+      "precoCentavos": 629,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-HEINEKEN",
+      "ativo": true
+    },
+    {
+      "id": "32",
+      "nome": "Água tônica 350 ml",
+      "categoriaId": "bebidas",
+      "precoCentavos": 339,
+      "quantidade": 0,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-AGUA-TONICA-350ML",
       "ativo": true
     },
     {

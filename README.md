@@ -60,6 +60,14 @@ ver as alterações. Os preços são inteiros em centavos (por exemplo,
 é apenas um placeholder público: não coloque chaves reais nem dados
 pessoais no repositório.
 
+### Imagens dos produtos
+
+Coloque as fotos em `public/assets/img`. Para os produtos já cadastrados, as
+imagens são associadas pelo nome do produto; se não houver uma associação, o
+catálogo procura um arquivo com o código de barras no nome e as extensões
+`.jfif`, `.jpg`, `.jpeg`, `.jpe`, `.png` e `.webp`. Se não encontrar uma
+imagem, exibe um espaço reservado no card.
+
 Para apontar o catálogo a outro endereço, defina `VITE_CATALOGO_URL`.
 O servidor remoto precisa permitir requisições CORS.
 

@@ -73,6 +73,9 @@ describe('catálogo', () => {
       screen.getByRole('heading', { name: 'Pagamento' }),
     ).toBeInTheDocument()
     expect(screen.getByText('Água mineral 500 ml')).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', { name: 'Água mineral 500 ml' }),
+    ).toHaveAttribute('src', '/assets/img/Agua%20mineral%20sem%20gas%20500ml.jfif')
     expect(screen.getByText('R$ 0,00')).toBeInTheDocument()
     expect(
       screen.queryByText('Produto oculto de demonstração'),
