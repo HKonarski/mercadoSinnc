@@ -58,6 +58,25 @@ describe('catálogo', () => {
   })
 
   it('carrega produtos e informações de pagamento do JSON', async () => {
+    const catalogo = criarJsonCatalogo()
+    const produtoBase = primeiro(catalogo.produtos)
+    catalogo.produtos.push(
+      {
+        ...produtoBase,
+        id: 'teste-biscoito-flay',
+        nome: 'Biscoito Flay',
+        codigoBarras: 'TEMP-BISCOITO-FLAY',
+        imagem: 'Biscoito FLay.jpg',
+      },
+      {
+        ...produtoBase,
+        id: 'teste-agua-tonica',
+        nome: 'Água tônica 350 ml',
+        codigoBarras: 'TEMP-AGUA-TONICA-350ML',
+        imagem: 'Agua tonica.jpg',
+      },
+    )
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(respostaJson(catalogo)))
     render(<App />)
 
     expect(screen.getByRole('status')).toHaveTextContent('Carregando catálogo')
@@ -76,6 +95,12 @@ describe('catálogo', () => {
     expect(
       screen.getByRole('img', { name: 'Água mineral 500 ml' }),
     ).toHaveAttribute('src', '/assets/img/Agua%20mineral%20sem%20gas%20500ml.jfif')
+    expect(
+      screen.getByRole('img', { name: 'Biscoito Flay' }),
+    ).toHaveAttribute('src', '/assets/img/Biscoito%20FLay.jpg')
+    expect(
+      screen.getByRole('img', { name: 'Água tônica 350 ml' }),
+    ).toHaveAttribute('src', '/assets/img/Agua%20tonica.jpg')
     expect(screen.getByText('R$ 0,00')).toBeInTheDocument()
     expect(
       screen.queryByText('Produto oculto de demonstração'),

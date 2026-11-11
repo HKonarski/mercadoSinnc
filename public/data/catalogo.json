@@ -6,103 +6,21 @@
   },
   "categorias": [
     { "id": "bebidas", "nome": "Bebidas" },
-    { "id": "salgados", "nome": "Salgados" },
-    { "id": "doces", "nome": "Doces" },
     { "id": "chocolates", "nome": "Chocolates" },
     { "id": "salgadinhos", "nome": "Salgadinhos" },
     { "id": "biscoitos", "nome": "Biscoitos" },
-    { "id": "laticinios", "nome": "Laticínios" },
-    { "id": "sem-produtos", "nome": "Sem produtos visíveis" }
+    { "id": "laticinios", "nome": "Laticínios" }
   ],
   "produtos": [
-    {
-      "id": "1",
-      "nome": "Água mineral 500 ml",
-      "categoriaId": "bebidas",
-      "precoCentavos": 250,
-      "quantidade": 24,
-      "estoqueMinimo": 6,
-      "codigoBarras": "7891000000011",
-      "ativo": true
-    },
-    {
-      "id": "2",
-      "nome": "Refrigerante lata 350 ml",
-      "categoriaId": "bebidas",
-      "precoCentavos": 500,
-      "quantidade": 4,
-      "estoqueMinimo": 6,
-      "codigoBarras": "7891000000028",
-      "ativo": true
-    },
-    {
-      "id": "3",
-      "nome": "Pão de queijo",
-      "categoriaId": "salgados",
-      "precoCentavos": 350,
-      "quantidade": 0,
-      "estoqueMinimo": 4,
-      "codigoBarras": "7891000000035",
-      "ativo": true
-    },
-    {
-      "id": "4",
-      "nome": "Barra de chocolate",
-      "categoriaId": "chocolates",
-      "precoCentavos": 690,
-      "quantidade": 12,
-      "estoqueMinimo": 0,
-      "codigoBarras": "7891000000042",
-      "ativo": true
-    },
-    {
-      "id": "5",
-      "nome": "Café expresso em cápsula",
-      "categoriaId": "bebidas",
-      "precoCentavos": 220,
-      "quantidade": 5,
-      "estoqueMinimo": 5,
-      "codigoBarras": "7891000000059",
-      "ativo": true
-    },
-    {
-      "id": "6",
-      "nome": "Biscoito recheado sabor chocolate com cobertura extra grande",
-      "categoriaId": "doces",
-      "precoCentavos": 475,
-      "quantidade": 18,
-      "estoqueMinimo": 0,
-      "codigoBarras": "7891000000066",
-      "ativo": true
-    },
-    {
-      "id": "7",
-      "nome": "Suco de caixinha",
-      "categoriaId": "bebidas",
-      "precoCentavos": 300,
-      "quantidade": 9,
-      "estoqueMinimo": 3,
-      "codigoBarras": "7891000000073",
-      "ativo": true
-    },
-    {
-      "id": "8",
-      "nome": "Salgadinho",
-      "categoriaId": "salgados",
-      "precoCentavos": 400,
-      "quantidade": 1,
-      "estoqueMinimo": 0,
-      "codigoBarras": "7891000000080",
-      "ativo": true
-    },
     {
       "id": "10",
       "nome": "Doritos 32gr",
       "categoriaId": "salgadinhos",
       "precoCentavos": 415,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-DORITOS-32GR",
+      "imagem": "salgadinho Doritos.jfif",
       "ativo": true
     },
     {
@@ -110,9 +28,10 @@
       "nome": "Ruffles 68gr",
       "categoriaId": "salgadinhos",
       "precoCentavos": 899,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-RUFFLES-68GR",
+      "imagem": "salgadinho Ruffles.jfif",
       "ativo": true
     },
     {
@@ -120,9 +39,10 @@
       "nome": "Torcida 35gr",
       "categoriaId": "salgadinhos",
       "precoCentavos": 189,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-TORCIDA-35GR",
+      "imagem": "salgadinho Torcida.jfif",
       "ativo": true
     },
     {
@@ -130,9 +50,10 @@
       "nome": "Biscoito Flay",
       "categoriaId": "biscoitos",
       "precoCentavos": 349,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-BISCOITO-FLAY",
+      "imagem": "Biscoito FLay.jpg",
       "ativo": true
     },
     {
@@ -140,9 +61,10 @@
       "nome": "Snickers",
       "categoriaId": "chocolates",
       "precoCentavos": 498,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-SNICKERS",
+      "imagem": "Snickers.jfif",
       "ativo": true
     },
     {
@@ -150,9 +72,10 @@
       "nome": "Bis Extra",
       "categoriaId": "chocolates",
       "precoCentavos": 549,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-BIS-EXTRA",
+      "imagem": "Bis Extra.jfif",
       "ativo": true
     },
     {
@@ -160,9 +83,10 @@
       "nome": "Kit Kat",
       "categoriaId": "chocolates",
       "precoCentavos": 425,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-KIT-KAT",
+      "imagem": "Kit Kat.jfif",
       "ativo": true
     },
     {
@@ -170,19 +94,21 @@
       "nome": "Talento",
       "categoriaId": "chocolates",
       "precoCentavos": 899,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-TALENTO",
+      "imagem": "Talento.jfif",
       "ativo": true
     },
     {
       "id": "18",
-      "nome": "Chocolate Nestle 80gr",
+      "nome": "Chocolate Nestlé 80 g",
       "categoriaId": "chocolates",
       "precoCentavos": 849,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-CHOCOLATE-NESTLE-80GR",
+      "imagem": "Chocolate Nestle.webp",
       "ativo": true
     },
     {
@@ -190,9 +116,10 @@
       "nome": "Cookies",
       "categoriaId": "biscoitos",
       "precoCentavos": 380,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-COOKIES",
+      "imagem": "Cookies.jfif",
       "ativo": true
     },
     {
@@ -200,59 +127,65 @@
       "nome": "Iogurte Frimesa",
       "categoriaId": "laticinios",
       "precoCentavos": 298,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-IOGURTE-FRIMESA",
+      "imagem": "Iogurte Frimesa.jfif",
       "ativo": true
     },
     {
       "id": "21",
-      "nome": "Wafer Bauducco 140g",
+      "nome": "Wafer Bauducco 140 g",
       "categoriaId": "biscoitos",
       "precoCentavos": 359,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-WAFER-BAUDUCCO-140G",
+      "imagem": "Wafer Bauducco.jfif",
       "ativo": true
     },
     {
       "id": "22",
-      "nome": "Bolinho Rollcake 34g",
+      "nome": "Bolinho Rollcake 34 g",
       "categoriaId": "biscoitos",
       "precoCentavos": 319,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-BOLINHO-ROLLCAKE-34G",
+      "imagem": "Bolinho Rollcake.jfif",
       "ativo": true
     },
     {
       "id": "23",
-      "nome": "Chocolate Suflair 80gr",
+      "nome": "Chocolate Suflair 80 g",
       "categoriaId": "chocolates",
       "precoCentavos": 849,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-CHOCOLATE-SUFLAIR-80GR",
+      "imagem": "Chocolate Suflair.jfif",
       "ativo": true
     },
     {
       "id": "24",
-      "nome": "Chocolate Lacta 80gr",
+      "nome": "Chocolate Lacta 80 g",
       "categoriaId": "chocolates",
       "precoCentavos": 690,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-CHOCOLATE-LACTA-80GR",
+      "imagem": "Chocolate Lacta.jfif",
       "ativo": true
     },
     {
       "id": "25",
-      "nome": "Coca Cola 350 ml",
+      "nome": "Coca-Cola 350 ml",
       "categoriaId": "bebidas",
       "precoCentavos": 379,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-COCA-COLA-350ML",
+      "imagem": "Coca Cola lata 350 ml.jfif",
       "ativo": true
     },
     {
@@ -260,9 +193,10 @@
       "nome": "Sprite Zero 350 ml",
       "categoriaId": "bebidas",
       "precoCentavos": 379,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-SPRITE-ZERO-350ML",
+      "imagem": "Refrigerante Sprite Zero 350ml.jpg",
       "ativo": true
     },
     {
@@ -270,9 +204,10 @@
       "nome": "H2OH Limonetto 500 ml",
       "categoriaId": "bebidas",
       "precoCentavos": 489,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-H2OH-LIMONETTO-500ML",
+      "imagem": "H2OH Limoneto.jfif",
       "ativo": true
     },
     {
@@ -280,19 +215,21 @@
       "nome": "Suco Prats 300 ml",
       "categoriaId": "bebidas",
       "precoCentavos": 699,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-SUCO-PRATS-300ML",
+      "imagem": "suco prats.jfif",
       "ativo": true
     },
     {
       "id": "29",
-      "nome": "Redbull 250 ml",
+      "nome": "Red Bull 250 ml",
       "categoriaId": "bebidas",
       "precoCentavos": 899,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-REDBULL-250ML",
+      "imagem": "energetico Red Bull.jfif",
       "ativo": true
     },
     {
@@ -300,9 +237,10 @@
       "nome": "Monster 473 ml",
       "categoriaId": "bebidas",
       "precoCentavos": 999,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-MONSTER-473ML",
+      "imagem": "Energetico monster.jfif",
       "ativo": true
     },
     {
@@ -310,9 +248,10 @@
       "nome": "Heineken",
       "categoriaId": "bebidas",
       "precoCentavos": 629,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-HEINEKEN",
+      "imagem": "Cerveja Heiniken Long Neck.jfif",
       "ativo": true
     },
     {
@@ -320,20 +259,11 @@
       "nome": "Água tônica 350 ml",
       "categoriaId": "bebidas",
       "precoCentavos": 339,
-      "quantidade": 0,
+      "quantidade": 1,
       "estoqueMinimo": 0,
       "codigoBarras": "TEMP-AGUA-TONICA-350ML",
+      "imagem": "Agua tonica.jpg",
       "ativo": true
-    },
-    {
-      "id": "9",
-      "nome": "Produto oculto de demonstração",
-      "categoriaId": "sem-produtos",
-      "precoCentavos": 100,
-      "quantidade": 10,
-      "estoqueMinimo": 0,
-      "codigoBarras": "7891000000097",
-      "ativo": false
     }
   ]
 }

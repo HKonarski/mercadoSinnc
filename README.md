@@ -62,11 +62,11 @@ pessoais no repositório.
 
 ### Imagens dos produtos
 
-Coloque as fotos em `public/assets/img`. Para os produtos já cadastrados, as
-imagens são associadas pelo nome do produto; se não houver uma associação, o
-catálogo procura um arquivo com o código de barras no nome e as extensões
-`.jfif`, `.jpg`, `.jpeg`, `.jpe`, `.png` e `.webp`. Se não encontrar uma
-imagem, exibe um espaço reservado no card.
+Coloque as fotos em `public/assets/img` e informe o nome do arquivo no campo
+opcional `imagem` do produto em `public/data/catalogo.json`. Se o campo não
+existir, o catálogo procura um arquivo com o código de barras no nome e as
+extensões `.jfif`, `.jpg`, `.jpeg`, `.jpe`, `.png` e `.webp`. Sem uma imagem
+correspondente, exibe um espaço reservado no card.
 
 Para apontar o catálogo a outro endereço, defina `VITE_CATALOGO_URL`.
 O servidor remoto precisa permitir requisições CORS.

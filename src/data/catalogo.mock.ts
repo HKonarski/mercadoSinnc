@@ -22,6 +22,7 @@ export const catalogoMock: Catalogo = {
       quantidade: 24,
       estoqueMinimo: 6,
       codigoBarras: '7891000000011',
+      imagem: 'Agua mineral sem gas 500ml.jfif',
       ativo: true,
     },
     {

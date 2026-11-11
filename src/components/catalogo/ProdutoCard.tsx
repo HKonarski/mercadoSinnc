@@ -4,31 +4,6 @@ import { estaComEstoqueBaixo, estaIndisponivel } from '../../utils/estoque'
 import { formatarMoeda } from '../../utils/formatarMoeda'
 
 const extensoesImagem = ['jfif', 'jpg', 'jpeg', 'jpe', 'png', 'webp']
-const imagensPorProduto: Record<string, string> = {
-  'Água mineral 500 ml': 'Agua mineral sem gas 500ml.jfif',
-  'Refrigerante lata 350 ml': 'Refrigerante lata 350ml.jpg',
-  'Doritos 32gr': 'salgadinho Doritos.jfif',
-  'Ruffles 68gr': 'salgadinho Ruffles.jfif',
-  'Torcida 35gr': 'salgadinho Torcida.jfif',
-  Snickers: 'Snickers.jfif',
-  'Bis Extra': 'Bis Extra.jfif',
-  'Kit Kat': 'Kit Kat.jfif',
-  Talento: 'Talento.jfif',
-  Cookies: 'Cookies.jfif',
-  'Iogurte Frimesa': 'Iogurte Frimesa.jfif',
-  'Wafer Bauducco 140g': 'Wafer Bauducco.jfif',
-  'Bolinho Rollcake 34g': 'Bolinho Rollcake.jfif',
-  'Chocolate Suflair 80gr': 'Chocolate Suflair.jfif',
-  'Chocolate Lacta 80gr': 'Chocolate Lacta.jfif',
-  'Coca Cola 350 ml': 'Coca Cola lata 350 ml.jfif',
-  'Sprite Zero 350 ml': 'Refrigerante Sprite Zero 350ml.jpg',
-  'H2OH Limonetto 500 ml': 'H2OH Limoneto.jfif',
-  'Suco Prats 300 ml': 'suco prats.jfif',
-  'Redbull 250 ml': 'energetico Red Bull.jfif',
-  'Monster 473 ml': 'Energetico monster.jfif',
-  Heineken: 'Cerveja Heiniken Long Neck.jfif',
-}
-
 export function ProdutoCard({
   produto,
   configuracao,
@@ -39,10 +14,9 @@ export function ProdutoCard({
   const [indiceExtensao, setIndiceExtensao] = useState(0)
   const indisponivel = estaIndisponivel(produto)
   const estoqueBaixo = estaComEstoqueBaixo(produto, configuracao)
-  const nomeImagem = imagensPorProduto[produto.nome]
-  const imagensProduto = nomeImagem
+  const imagensProduto = produto.imagem
     ? [
-        `${import.meta.env.BASE_URL}assets/img/${encodeURIComponent(nomeImagem)}`,
+        `${import.meta.env.BASE_URL}assets/img/${encodeURIComponent(produto.imagem)}`,
       ]
     : extensoesImagem.map(
         (extensao) =>

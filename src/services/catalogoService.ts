@@ -11,6 +11,14 @@ function texto(valor: unknown, campo: string): string {
   return valor
 }
 
+function nomeArquivoImagem(valor: unknown): string {
+  const nome = texto(valor, 'produto.imagem')
+  if (nome.includes('/') || nome.includes('\\') || nome === '.' || nome === '..') {
+    throw new Error('Campo inválido no catálogo: produto.imagem')
+  }
+  return nome
+}
+
 function inteiroNaoNegativo(valor: unknown, campo: string): number {
   if (typeof valor !== 'number' || !Number.isInteger(valor) || valor < 0) {
     throw new Error(`Campo inválido no catálogo: ${campo}`)
@@ -92,6 +100,9 @@ function validarProdutos(valor: unknown, categorias: Categoria[]): Produto[] {
         'produto.estoqueMinimo',
       ),
       codigoBarras: texto(item.codigoBarras, 'produto.codigoBarras'),
+      ...(item.imagem === undefined
+        ? {}
+        : { imagem: nomeArquivoImagem(item.imagem) }),
       ativo: item.ativo,
     }
   })

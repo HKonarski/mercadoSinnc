@@ -11,6 +11,7 @@ export type Produto = {
   quantidade: number
   estoqueMinimo: number
   codigoBarras: string
+  imagem?: string
   ativo: boolean
 }
 
