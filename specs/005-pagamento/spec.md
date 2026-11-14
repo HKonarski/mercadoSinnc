@@ -223,6 +223,12 @@ Não fazem parte da spec, mas o plano precisa tratar:
 - O comprovante do Pix serve para dar baixa (o administrador confere)
 - "Ficha" depende da permissão "Comprar na ficha" (Feature 004)
 - O crédito pré-pago é uma evolução posterior (Feature 006)
+- No protótipo front-end, a área de pendências pode montar um código Pix
+  demonstrativo, explicitamente não pagável; a chave atual também é
+  placeholder. Não há integração bancária nem confirmação de pagamento
+- No protótipo front-end, o formulário de comprovante aceita PDF e
+  altera o status apenas em memória para demonstrar o fluxo; o arquivo
+  não é transmitido nem armazenado
 
 ## Perguntas em aberto
 - **Baixa de estoque:** o estoque baixa ao concluir a compra (R8), mesmo

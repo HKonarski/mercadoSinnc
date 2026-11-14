@@ -1,9 +1,10 @@
 # Feature 006: Crédito pré-pago
 
-**Situação:** evolução posterior. Entra depois das Features 005, 007 e
-008 (ordem de implementação definida na constitution), então as
-decisões em aberto abaixo podem esperar até lá. Pontos marcados com
-**[a confirmar]** são propostas à espera de aprovação.
+**Situação:** evolução posterior. Ordem de implementação confirmada:
+concluir primeiro as Features 005, 007 e 008; implementar esta Feature
+006 depois delas. As decisões em aberto abaixo podem esperar até lá.
+Pontos marcados com **[a confirmar]** são propostas à espera de
+aprovação.
 
 ## Objetivo
 Permitir que o usuário deixe um valor antecipado no mercadinho, pago via

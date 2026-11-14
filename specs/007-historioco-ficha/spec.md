@@ -135,6 +135,14 @@ Cancelada), comprovante e valor pendente vêm da Feature 005.
 - A tela mostra o histórico de compras e o valor pendente da ficha
   (itens "Histórico de Compra" e "Valor Pendente na Ficha" do wireframe)
 - O comprovante é enviado a partir da compra pendente (Feature 005)
+- No protótipo front-end, os três itens de "Como comprar" abrem
+  componentes próprios: histórico completo, resumo/seleção de pendências
+  e envio de comprovante PDF. Os registros são demonstrativos, mantidos
+  somente em memória, sem autenticação nem persistência
+- O valor pendente do protótipo soma somente compras "Pendente";
+  compras "Aguardando conferência" são mostradas separadamente
+- O Pix do protótipo é um código claramente identificado como
+  demonstrativo e não pagável; não simula confirmação de pagamento
 
 ## Perguntas em aberto
 - **Em conferência:** mostrar à parte do valor pendente (R2) ou somar

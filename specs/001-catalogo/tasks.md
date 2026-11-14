@@ -25,7 +25,7 @@ Marque `[x]` ao concluir.
 
 ## Fundação
 
-### [ ] T01 - Criar o projeto
+### [x] T01 - Criar o projeto
 - Criar o projeto Vite (React + TypeScript) **na raiz** do repositório:
   ```powershell
   npm create vite@latest . -- --template react-ts
@@ -55,7 +55,7 @@ Marque `[x]` ao concluir.
 - Pronto quando: `npm run dev` abre a página, `npm test` roda sem erro,
   `npm run build`, `npm run lint` e `npm run format` passam
 
-### [ ] T02 - Estrutura de pastas e tipos
+### [x] T02 - Estrutura de pastas e tipos
 - Criar as pastas do plano:
   ```powershell
   New-Item -ItemType Directory -Force src\components\catalogo, src\components\ui, src\types, src\services, src\data, src\utils, src\hooks, src\test
@@ -70,20 +70,20 @@ Marque `[x]` ao concluir.
 
 ## Regras de negócio (funções puras, com testes)
 
-### [ ] T03 - formatarMoeda
+### [x] T03 - formatarMoeda
 - A função recebe **centavos** (decisão D2)
 - 350 -> "R$ 3,50"; 0 -> "R$ 0,00"; 123450 -> "R$ 1.234,50";
   5 -> "R$ 0,05"
 - Pronto quando: os testes desses casos passam
 
-### [ ] T04 - normalizarBusca
+### [x] T04 - normalizarBusca
 - Remove acentos, ignora maiúsculas, colapsa espaços repetidos e apara
   as pontas
 - "Água " -> "agua"; "PÃO" -> "pao"; "R$  2,50" -> "r$ 2,50"
 - Já existe no `App.tsx` da Fase 2; extrair para `utils/normalizarBusca.ts`
 - Pronto quando: os testes passam (cobre R3)
 
-### [ ] T05 - Regras de estoque
+### [x] T05 - Regras de estoque
 - `estaIndisponivel`, `estaComEstoqueBaixo(produto, config)` e
   `estaNasUltimasUnidades(produto, config)` (decisão D3 do plano)
 - Testar todos os cenários:
@@ -109,7 +109,7 @@ Marque `[x]` ao concluir.
   - limite padrão 5, item sem mínimo e estoque 5 -> entra
 - Pronto quando: todos passam (cobre R4, R5.1 a R5.4 e R12)
 
-### [ ] T06 - filtrarProdutos e categoriasComItens
+### [x] T06 - filtrarProdutos e categoriasComItens
 - `filtrarProdutos(produtos, busca, filtros, config)` como função pura
   (decisão D10), usando `normalizarBusca` e as regras de T05
 - Busca **por trecho** em nome, categoria, código de barras e preço
@@ -135,7 +135,7 @@ Marque `[x]` ao concluir.
 
 ## Dados
 
-### [ ] T07 - Dados mock
+### [x] T07 - Dados mock
 - Criar ~10 produtos em `data/produtos.mock.ts` cobrindo:
   - categorias como dados separados dos itens (Doces, Salgados,
     Bebidas e Chocolates como exemplo), incluindo uma categoria sem
@@ -152,7 +152,7 @@ Marque `[x]` ao concluir.
   - item com mínimo 0 (sem mínimo)
 - Pronto quando: os dados compilam e respeitam o tipo `Produto`
 
-### [ ] T08 - Camada de serviço
+### [x] T08 - Camada de serviço
 - `ProdutosService` (interface) com implementação mock, atraso simulado
   (~500 ms) e um modo para forçar erro
 - `CategoriasService` mock (categorias cadastradas pelo
@@ -164,12 +164,12 @@ Marque `[x]` ao concluir.
 
 ## Hooks
 
-### [ ] T09 - useProdutos
+### [x] T09 - useProdutos
 - Estados: carregando, erro, sucesso; função `tentarNovamente`
 - Pronto quando: o hook alterna entre os estados corretamente (testar
   sucesso e erro forçado)
 
-### [ ] T10 - useFiltroCatalogo
+### [x] T10 - useFiltroCatalogo
 - Guarda busca e filtros e devolve a lista filtrada, usando
   `filtrarProdutos`; a visualização (grade ou lista) fica em estado
   próprio, fora dos filtros
@@ -178,12 +178,12 @@ Marque `[x]` ao concluir.
 
 ## Componentes
 
-### [ ] T11 - Componentes de estado
+### [x] T11 - Componentes de estado
 - Carregando, Erro (com botão "Tentar de novo"), EstadoVazio (mensagem
   recebida por parâmetro)
 - Pronto quando: os três renderizam isolados com Tailwind
 
-### [ ] T12 - ProdutoCard
+### [x] T12 - ProdutoCard
 - Mostra categoria, nome, preço formatado, quantidade e código de
   barras
 - Selo "Indisponível" (botão de adicionar desabilitado) e selo "Estoque
@@ -194,7 +194,7 @@ Marque `[x]` ao concluir.
 - Pronto quando: renderiza os 4 casos (normal, indisponível, estoque
   baixo, nome longo)
 
-### [ ] T13 - BuscaProdutos, CaixaFiltros e FiltrosRecolhiveis
+### [x] T13 - BuscaProdutos, CaixaFiltros e FiltrosRecolhiveis
 - Campo de busca com rótulo para leitor de tela
 - Caixa de filtros: categorias, "Em estoque", "Últimas unidades" e
   botões de visualização (grade e lista, com `aria-pressed`)
@@ -205,7 +205,7 @@ Marque `[x]` ao concluir.
 - Pronto quando: cada controle altera o estado esperado e tem rótulo
   acessível, e o painel abre e fecha no celular sem perder os filtros
 
-### [ ] T14 - ListaProdutos
+### [x] T14 - ListaProdutos
 - Grade ou lista conforme a visualização escolhida
 - Mensagens distintas: "Nenhum item cadastrado ainda" (catálogo
   vazio) e "Nenhum produto encontrado para esses filtros." (resultado
@@ -213,14 +213,14 @@ Marque `[x]` ao concluir.
 - Pronto quando: trocar para lista mantém os mesmos itens e as duas
   mensagens aparecem nos casos certos
 
-### [ ] T15 - FormasPagamento
+### [x] T15 - FormasPagamento
 - Lista tipada com Pix e Ficha (decisão D5): Pix com a chave e botão
   "Copiar chave Pix"; Ficha com a descrição de caderneta/fiado
 - Pronto quando: aparecem só duas formas e copiar a chave funciona
 
 ## Montagem
 
-### [ ] T16 - CatalogoPage e cabeçalho
+### [x] T16 - CatalogoPage e cabeçalho
 - Cabeçalho com logo SINNC e ícone "Usuário" (sem ação ainda; o login
   vem na Feature 004)
 - Montar a página: busca, filtros, lista, formas de pagamento
@@ -228,7 +228,7 @@ Marque `[x]` ao concluir.
 - Pronto quando: a página funciona de ponta a ponta com os mocks e os
   testes de `App.test.tsx` continuam passando
 
-### [ ] T17 - Responsividade
+### [x] T17 - Responsividade
 - Mobile-first, ajustando mobile, tablet e desktop (R9), alinhado aos
   wireframes da Fase 1
 - Conferir o painel de filtros recolhível no celular e visível em
@@ -236,58 +236,92 @@ Marque `[x]` ao concluir.
   `-tablet` e `-desktop`), inclusive o comportamento no tablet
 - Pronto quando: sem rolagem horizontal em 360 px, 768 px e 1280 px
 
-### [ ] T18 - Acessibilidade e revisão final
+### [x] T18 - Acessibilidade e revisão final
 - Labels nos campos, foco visível, navegação por teclado, contraste
-- Percorrer os critérios de aceite da spec v2 um a um (checklist abaixo)
+- Percorrer os critérios de aceite da spec v3 um a um (checklist abaixo)
 - Pronto quando: todos os itens do checklist estão marcados
 
 ### [ ] T19 - Entrega
 - Atualizar o README (como rodar, como testar e a tabela de
   funcionalidades)
-- Abrir o PR da branch da feature
-- Pronto quando: o PR está aberto com a descrição ligada à spec
+- Abrir o PR da branch `feature/fase-3-componentes`
+- Pronto quando: o PR está aberto com a descrição ligada ao marco e à
+  spec
+
+## Fase 4: dados externos
+
+### [x] T20 - Dados a partir de JSON externo
+- Criar `public/data/catalogo.json` com configuração, categorias e
+  produtos (formato no marco `fase-4.md`), preços em centavos e os
+  mesmos casos do mock da T07 (item oculto, mínimo 0, estoque 0,
+  categoria sem item visível, nome longo). Usar placeholder na chave
+  Pix: o arquivo é público
+- Criar `services/catalogoJson.ts` com `lerCatalogo()`: faz `fetch` do
+  arquivo (`VITE_CATALOGO_URL` ou `${import.meta.env.BASE_URL}data/catalogo.json`),
+  valida o formato com uma função de checagem de tipos (sem `any`),
+  guarda o resultado em cache e junta cada produto à sua categoria
+- Criar as implementações JSON de `ProdutosService`,
+  `CategoriasService` e `ConfiguracaoService` com `lerCatalogo()` e
+  trocar a implementação usada pelo app. Componentes e hooks não mudam
+  (decisão D16)
+- Falha de rede, resposta HTTP com erro, JSON malformado e formato
+  inválido viram o estado de erro com "Tentar de novo"; tentar de novo
+  limpa o cache e refaz a leitura
+- Manter a implementação mock para os testes
+- Testes com `fetch` simulado: sucesso (só itens visíveis), HTTP 404,
+  JSON malformado, estrutura inválida e "tentar de novo"
+- Atualizar o README: onde fica o JSON e como editar os dados
+- Pronto quando: a página mostra os dados do JSON (e muda ao editar o
+  arquivo e recarregar), sem dados de produto no código, e os testes
+  passam
+
+### [ ] T21 - Entrega da Fase 4
+- Conferir o checklist do marco `fase-4.md`
+- `npm run build` seguido de `npm run preview` carrega o JSON
+- Abrir o PR da branch `feature/fase-4-json`
+- Pronto quando: o PR está aberto com a descrição ligada ao marco
 
 ## Checklist de aceite (T18)
 
 ### Listagem e busca
-- [ ] Todos os itens ativos aparecem com categoria, nome, preço e
+- [x] Todos os itens ativos aparecem com categoria, nome, preço e
       quantidade
-- [ ] Preço de 350 centavos aparece como "R$ 3,50"
-- [ ] Busca "agua" encontra "Água" e não "Pão de queijo"
-- [ ] Busca "salgados" traz só a categoria Salgados
-- [ ] Busca "R$ 2,50" traz só os itens com esse preço
-- [ ] Busca "choco" traz todos os itens com "choco" no nome ou na
+- [x] Preço de 350 centavos aparece como "R$ 3,50"
+- [x] Busca "agua" encontra "Água" e não "Pão de queijo"
+- [x] Busca "salgados" traz só a categoria Salgados
+- [x] Busca "R$ 2,50" traz só os itens com esse preço
+- [x] Busca "choco" traz todos os itens com "choco" no nome ou na
       categoria
-- [ ] Busca por trecho do código traz os itens que o contêm
-- [ ] Busca pelo código completo traz o item
-- [ ] Busca sem resultado mostra "Nenhum produto encontrado para esses
+- [x] Busca por trecho do código traz os itens que o contêm
+- [x] Busca pelo código completo traz o item
+- [x] Busca sem resultado mostra "Nenhum produto encontrado para esses
       filtros."
-- [ ] Limpar a busca restaura a lista
+- [x] Limpar a busca restaura a lista
 
 ### Filtros e visualização
-- [ ] Filtro de categoria mostra só a categoria marcada e desmarcar
+- [x] Filtro de categoria mostra só a categoria marcada e desmarcar
       restaura
-- [ ] "Em estoque" esconde itens com estoque 0
-- [ ] "Últimas unidades" nos cenários da spec (inclusive com aviso
+- [x] "Em estoque" esconde itens com estoque 0
+- [x] "Últimas unidades" nos cenários da spec (inclusive com aviso
       desligado, limite padrão alterado e limite 0)
-- [ ] Categoria sem item visível não aparece nos filtros
-- [ ] Busca e filtro juntos mostram só o que atende aos dois
-- [ ] Visualização inicial é grade; "lista" muda o formato, fica
+- [x] Categoria sem item visível não aparece nos filtros
+- [x] Busca e filtro juntos mostram só o que atende aos dois
+- [x] Visualização inicial é grade; "lista" muda o formato, fica
       marcada e mantém os mesmos itens
-- [ ] No celular os filtros ficam recolhidos atrás do botão
+- [x] No celular os filtros ficam recolhidos atrás do botão
       "Filtros"; em telas grandes a caixa fica visível
-- [ ] Item oculto não aparece na lista, na busca nem nos filtros
+- [x] Item oculto não aparece na lista, na busca nem nos filtros
 
 ### Estoque e pagamento
-- [ ] Estoque 0: "Indisponível" e botão desabilitado
-- [ ] Aviso desligado: nenhum "Estoque baixo"
-- [ ] Aviso ligado com mínimo 5 e estoque 5: "Estoque baixo"
-- [ ] Aviso ligado e sem mínimo: nenhum selo de estoque baixo
-- [ ] Pagamento mostra apenas Pix e Ficha
+- [x] Estoque 0: "Indisponível" e botão desabilitado
+- [x] Aviso desligado: nenhum "Estoque baixo"
+- [x] Aviso ligado com mínimo 5 e estoque 5: "Estoque baixo"
+- [x] Aviso ligado e sem mínimo: nenhum selo de estoque baixo
+- [x] Pagamento mostra apenas Pix e Ficha
 
 ### Estados
-- [ ] Erro de carregamento mostra mensagem e "Tentar de novo"
-- [ ] Catálogo vazio mostra "Nenhum item cadastrado ainda"
+- [x] Erro de carregamento mostra mensagem e "Tentar de novo"
+- [x] Catálogo vazio mostra "Nenhum item cadastrado ainda"
 
 ## Rastreabilidade
 | Requisito | Tarefas |
