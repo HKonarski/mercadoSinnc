@@ -1,9 +1,9 @@
 # 🛒 mercadoSinnc
 
-Plataforma web para o **mercadinho interno da SINNC**, que substitui a ficha
-de papel por um fluxo digital: consultar preços, montar o carrinho, pagar via
-Pix ou deixar na ficha (caderneta/fiado) e acompanhar o histórico e o valor
-pendente.
+Plataforma web em desenvolvimento para o **mercadinho interno da SINNC**.
+O objetivo é substituir a ficha de papel por um fluxo digital para consultar
+preços, montar o carrinho, pagar via Pix ou ficha e acompanhar o histórico e
+os valores pendentes.
 
 Trabalho de Conclusão da Disciplina de **Desenvolvimento em Ambiente Web**.
 
@@ -15,7 +15,7 @@ Higor Konarski ([@HKonarski](https://github.com/HKonarski))
 
 Hoje, quem compra no mercadinho confere o preço numa tabela, anota data,
 quantidade, item e assinatura na ficha, e marca se pagou. A plataforma
-organiza esse processo para dois perfis:
+está sendo construída para atender a dois perfis:
 
 | Perfil | O que faz |
 |---|---|
@@ -59,6 +59,9 @@ ver as alterações. Os preços são inteiros em centavos (por exemplo,
 `250` = R$ 2,50); `ativo: false` oculta um produto. A chave Pix do arquivo
 é apenas um placeholder público: não coloque chaves reais nem dados
 pessoais no repositório.
+O arquivo também contém produtos demonstrativos para conferir estados como
+estoque zero, nome longo e item oculto; esses registros não representam o
+estoque real do mercadinho.
 
 ### Imagens dos produtos
 
@@ -71,15 +74,24 @@ correspondente, exibe um espaço reservado no card.
 Para apontar o catálogo a outro endereço, defina `VITE_CATALOGO_URL`.
 O servidor remoto precisa permitir requisições CORS.
 
+O catálogo é a parte funcional atualmente implementada. As demais ações
+descritas para usuários e administradores são objetivos do produto e ainda
+dependem das próximas funcionalidades.
+
 ## Fases do trabalho
 
 | Fase | Entrega | Situação |
 |---|---|---|
-| 1 | Wireframes mobile, tablet e desktop | ✅ Entregue |
-| 2 | Página no `App.tsx` com Tailwind CSS | ✅ Entregue |
-| 3 | Componentes, serviços, hooks e regras do catálogo | ✅ Implementação e aceite concluídos; PR pendente |
-| 4 | Leitura do catálogo a partir de JSON | ✅ Implementação concluída; aceite final/PR pendentes |
-| 5 e 6 | Back-end em Java e banco de dados SQL | ⏳ Planejado |
+| 1 | Wireframes mobile, tablet e desktop | ✅ Entregue; PR #1 integrado |
+| 2 | Página inicial com Tailwind CSS | ✅ Entregue; PR #2 integrado |
+| 3 | Componentes, serviços, hooks e regras do catálogo | ✅ Entregue; PR #3 integrado |
+| 4 | Leitura do catálogo a partir de JSON | 🚧 T20 validada; falta concluir T21 e abrir o PR |
+| 5 e 6 | Back-end em Java e banco de dados SQL | ⏳ Planejadas |
+
+Na Fase 4, o serviço e a leitura do JSON estão implementados. A edição do
+arquivo e a recarga da página foram verificadas no navegador; o build de
+produção também carregou o catálogo. A entrega prevista era 13/11/2026.
+Testes (29), build, lint e `npm run format:check` passaram na validação local.
 
 ## Como o projeto é desenvolvido (SDD)
 
@@ -99,14 +111,19 @@ specs/
 
 | Funcionalidade | Spec | Plano | Tarefas |
 |---|---|---|---|
-| 001 Catálogo de produtos | ✅ | ✅ | ✅ (Fases 3 e 4 implementadas) |
+| 001 Catálogo de produtos | ✅ | ✅ | 🚧 Fase 3 concluída; T20 validada; T21/PR pendente |
 | 002 Carrinho | ✅ | ⏳ | ⏳ |
 | 003 Leitura de código de barras | ✅ | ⏳ | ⏳ |
 | 004 Identificação do usuário | ✅ | ⏳ | ⏳ |
 | 005 Pagamento (Pix, ficha e comprovante) | ✅ | ⏳ | ⏳ |
-| 006 Crédito pré-pago (evolução)| ✅ | ⏳ | ⏳ |
+| 006 Crédito pré-pago (evolução) | ✅ | ⏳ | ⏳ |
 | 007 Histórico e valor pendente | ✅ | ⏳ | ⏳ |
 | 008 Área do administrador | ✅ | ⏳ | ⏳ |
+
+As telas de histórico, pendências e envio de comprovante presentes no
+front-end são demonstrativas e usam dados simulados. Elas não representam a
+implementação completa das Features 005 e 007: pagamento real, autenticação,
+persistência e integração com o back-end ainda não foram entregues.
 
 ### Ordem de implementação das funcionalidades
 

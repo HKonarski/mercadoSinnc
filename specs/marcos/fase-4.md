@@ -78,7 +78,7 @@ Regras do formato:
       `fetch`; não há dados de produto no código da aplicação
 - [x] Os componentes e hooks não foram alterados para trocar a fonte;
       só os serviços
-- [ ] Editar o JSON e recarregar a página muda o que aparece
+- [x] Editar o JSON e recarregar a página muda o que aparece
 - [x] Itens `ativo: false` não aparecem
 - [x] Preços em centavos aparecem como "R$ 0,00"
 - [x] Arquivo ausente (404), JSON malformado e estrutura inválida mostram

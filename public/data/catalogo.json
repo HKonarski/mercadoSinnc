@@ -9,7 +9,8 @@
     { "id": "chocolates", "nome": "Chocolates" },
     { "id": "salgadinhos", "nome": "Salgadinhos" },
     { "id": "biscoitos", "nome": "Biscoitos" },
-    { "id": "laticinios", "nome": "Laticínios" }
+    { "id": "laticinios", "nome": "Laticínios" },
+    { "id": "sem-itens-visiveis", "nome": "Sem itens visíveis" }
   ],
   "produtos": [
     {
@@ -264,6 +265,36 @@
       "codigoBarras": "TEMP-AGUA-TONICA-350ML",
       "imagem": "Agua tonica.jpg",
       "ativo": true
+    },
+    {
+      "id": "demo-estoque-zero",
+      "nome": "Produto demonstrativo sem estoque",
+      "categoriaId": "biscoitos",
+      "precoCentavos": 100,
+      "quantidade": 0,
+      "estoqueMinimo": 3,
+      "codigoBarras": "TEMP-DEMO-ESTOQUE-ZERO",
+      "ativo": true
+    },
+    {
+      "id": "demo-nome-longo",
+      "nome": "Produto demonstrativo com um nome excepcionalmente longo para validar a quebra de linha no cartão",
+      "categoriaId": "chocolates",
+      "precoCentavos": 100,
+      "quantidade": 5,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-DEMO-NOME-LONGO",
+      "ativo": true
+    },
+    {
+      "id": "demo-oculto",
+      "nome": "Produto oculto de demonstração",
+      "categoriaId": "sem-itens-visiveis",
+      "precoCentavos": 100,
+      "quantidade": 10,
+      "estoqueMinimo": 0,
+      "codigoBarras": "TEMP-DEMO-OCULTO",
+      "ativo": false
     }
   ]
 }

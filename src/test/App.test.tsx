@@ -94,10 +94,14 @@ describe('catálogo', () => {
     expect(screen.getByText('Água mineral 500 ml')).toBeInTheDocument()
     expect(
       screen.getByRole('img', { name: 'Água mineral 500 ml' }),
-    ).toHaveAttribute('src', '/assets/img/Agua%20mineral%20sem%20gas%20500ml.jfif')
-    expect(
-      screen.getByRole('img', { name: 'Biscoito Flay' }),
-    ).toHaveAttribute('src', '/assets/img/Biscoito%20FLay.jpg')
+    ).toHaveAttribute(
+      'src',
+      '/assets/img/Agua%20mineral%20sem%20gas%20500ml.jfif',
+    )
+    expect(screen.getByRole('img', { name: 'Biscoito Flay' })).toHaveAttribute(
+      'src',
+      '/assets/img/Biscoito%20FLay.jpg',
+    )
     expect(
       screen.getByRole('img', { name: 'Água tônica 350 ml' }),
     ).toHaveAttribute('src', '/assets/img/Agua%20tonica.jpg')

@@ -13,7 +13,12 @@ function texto(valor: unknown, campo: string): string {
 
 function nomeArquivoImagem(valor: unknown): string {
   const nome = texto(valor, 'produto.imagem')
-  if (nome.includes('/') || nome.includes('\\') || nome === '.' || nome === '..') {
+  if (
+    nome.includes('/') ||
+    nome.includes('\\') ||
+    nome === '.' ||
+    nome === '..'
+  ) {
     throw new Error('Campo inválido no catálogo: produto.imagem')
   }
   return nome

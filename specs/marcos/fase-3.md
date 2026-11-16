@@ -4,7 +4,7 @@ Entrega prevista: 13/11/2026 (cronograma atualizado do professor).
 
 Branch: `feature/fase-3-componentes`.
 
-Situação: **aceite concluído; PR de entrega pendente; dentro do prazo**.
+Situação: **entregue; PR #3 integrado**.
 
 ## Objetivo
 Refatorar a página provisória da Fase 2 (toda no `App.tsx`) para uma
@@ -63,7 +63,7 @@ Da Feature 001 (Catálogo de produtos), versão 3:
 - [x] `npm test`, `npm run build`, `npm run lint` e `npm run format`
       sem erros
 - [x] README atualizado
-- [ ] PR aberto
+- [x] PR aberto e integrado (#3)
 
 ### Evidências do aceite T18
 

@@ -241,7 +241,7 @@ Marque `[x]` ao concluir.
 - Percorrer os critérios de aceite da spec v3 um a um (checklist abaixo)
 - Pronto quando: todos os itens do checklist estão marcados
 
-### [ ] T19 - Entrega
+### [x] T19 - Entrega
 - Atualizar o README (como rodar, como testar e a tabela de
   funcionalidades)
 - Abrir o PR da branch `feature/fase-3-componentes`
