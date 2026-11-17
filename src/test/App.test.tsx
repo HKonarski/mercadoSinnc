@@ -91,6 +91,11 @@ describe('catálogo', () => {
     expect(
       screen.getByRole('heading', { name: 'Pagamento' }),
     ).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', {
+        name: 'QR Code demonstrativo, não pagável',
+      }),
+    ).toBeInTheDocument()
     expect(screen.getByText('Água mineral 500 ml')).toBeInTheDocument()
     expect(
       screen.getByRole('img', { name: 'Água mineral 500 ml' }),

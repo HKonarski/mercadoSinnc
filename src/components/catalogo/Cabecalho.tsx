@@ -13,11 +13,11 @@ export function Cabecalho({
 
   return (
     <header className="sticky top-0 z-50 border-b border-blue-800 bg-blue-700 text-white">
-      <div className="mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-3 px-4 py-2">
+      <div className="mx-auto grid min-h-14 w-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-3 py-2 sm:px-4 lg:grid-cols-[200px_minmax(0,1fr)_260px] lg:gap-5">
         <a
           href={import.meta.env.BASE_URL}
           aria-label="Mercadinho SINNC - início"
-          className="flex min-w-0 items-center gap-2 sm:gap-3"
+          className="hidden min-w-0 items-center gap-2 lg:flex lg:gap-3"
         >
           <span className="truncate text-base font-bold tracking-tight sm:text-lg">
             Mercadinho
@@ -28,7 +28,7 @@ export function Cabecalho({
             className="h-10 w-14 shrink-0 object-contain brightness-0 invert sm:h-11 sm:w-16"
           />
         </a>
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="col-start-2 flex shrink-0 items-center gap-1 lg:col-start-3">
           <button
             type="button"
             aria-label="Usuário"

@@ -40,16 +40,31 @@ export function FormasPagamento({
       aria-labelledby="titulo-pagamento"
       className="scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
     >
-      <h2
-        id="titulo-pagamento"
-        className="text-lg font-semibold text-slate-900"
-      >
-        Pagamento
-      </h2>
-      <p className="mt-3 text-sm text-slate-500">Valor do carrinho</p>
-      <p className="text-3xl font-bold text-slate-900">{formatarMoeda(0)}</p>
-      <p className="mt-1 text-xs text-slate-500">
-        O carrinho e o registro de compras serão habilitados em etapas futuras.
+      <div className="grid grid-cols-[96px_minmax(0,1fr)] gap-3">
+        <div
+          role="img"
+          aria-label="QR Code demonstrativo, não pagável"
+          className="flex aspect-square flex-col justify-center border-2 border-slate-900 p-2 text-xl font-medium leading-tight text-slate-950"
+        >
+          <span>QR</span>
+          <span>Code</span>
+        </div>
+        <div>
+          <h2
+            id="titulo-pagamento"
+            className="text-lg font-semibold text-slate-900"
+          >
+            Pagamento
+          </h2>
+          <p className="mt-3 text-sm text-slate-500">Valor do carrinho</p>
+          <p className="text-3xl font-bold text-slate-900">
+            {formatarMoeda(0)}
+          </p>
+        </div>
+      </div>
+      <p className="mt-3 text-xs text-slate-500">
+        QR Code ilustrativo, não válido para pagamento. O carrinho e o registro
+        de compras serão habilitados em etapas futuras.
       </p>
       <div className="mt-4 flex flex-col gap-2">
         <button
