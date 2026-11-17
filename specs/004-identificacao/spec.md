@@ -20,11 +20,12 @@ cada pessoa pode fazer.
   são tratados sem diferenciar maiúsculas/minúsculas e ignorando
   espaços no começo e no fim
 - R3. Senha com no mínimo 8 caracteres
-- R4. E-mail do domínio da SINNC [domínio exato a confirmar]: a conta
-  é criada já **Ativa**, com acesso imediato
-- R5. E-mail de outro domínio: a conta é criada como **Pendente**. A
-  pessoa não acessa carrinho, pagamento nem ficha até o administrador
-  aprovar
+- R4. E-mail do domínio `@sinnc.com.br`: a conta fica **Pendente** até
+  a pessoa confirmar a posse do endereço pelo link enviado por e-mail;
+  após a confirmação, passa a **Ativa** e pode acessar a plataforma
+- R5. E-mail de outro domínio: a conta é criada como **Pendente** e
+  aguarda aprovação administrativa. Após aprovada, passa a **Ativa**;
+  não exige link de confirmação de e-mail nesta versão
 
 ### Login e sessão
 - R6. Login com e-mail e senha
@@ -59,10 +60,17 @@ cada pessoa pode fazer.
   existe uma: "Comprar na ficha (fiado)". Com ela desligada, a pessoa
   vê o catálogo, monta o carrinho e paga via Pix, mas a opção "Ficha"
   aparece indisponível. A permissão vem ligada por padrão em toda
-  conta nova ativa
-- R19. A restrição parcial é aplicada de forma manual pelo
-  administrador. Bloqueio automático por valor pendente fica como
-  evolução futura
+  conta nova ativa, exceto enquanto houver restrição automática por
+  atraso na ficha. Quando a Feature 006 for implementada, haverá também
+  uma permissão independente "Usar crédito"; desligá-la impede usar o
+  saldo em compras, mas não impede consultar ou recarregar
+- R19. A restrição de comprar na ficha pode ser aplicada manualmente
+  pelo administrador ou automaticamente quando houver compra na ficha
+  vencida e não quitada. O bloqueio automático afeta somente novas
+  compras na ficha: login, catálogo, Pix e histórico continuam
+  disponíveis. Após a quitação e confirmação pelo administrador, a
+  restrição automática é removida; uma restrição manual já existente
+  permanece
 - R20. Ao bloquear ou restringir, o administrador pode registrar um
   motivo (opcional), visível só para administradores
 - R21. Bloquear ou restringir nunca apaga dados: histórico, ficha e
@@ -77,7 +85,9 @@ cada pessoa pode fazer.
 
 ### Mensagens ao usuário
 - R25. Mensagens exibidas:
-  - Pendente: "Seu cadastro aguarda aprovação"
+  - Pendente aguardando confirmação de e-mail: "Confirme seu e-mail
+    para ativar seu cadastro"
+  - Pendente aguardando aprovação: "Seu cadastro aguarda aprovação"
   - Bloqueada: "Seu acesso está bloqueado, fale com o responsável"
   - Sem permissão de ficha: "A compra na ficha não está liberada para
     você. Pague via Pix ou fale com o responsável"
@@ -85,11 +95,14 @@ cada pessoa pode fazer.
 ## Critérios de aceite
 
 ### Cadastro
-- Dado um cadastro válido com e-mail da SINNC, quando enviar, então a
-  conta fica Ativa e o usuário entra logado.
+- Dado um cadastro com e-mail `@sinnc.com.br`, quando enviar, então a
+  conta fica Pendente e recebe um link de confirmação; após abrir o link,
+  a conta fica Ativa e o usuário pode entrar.
 - Dado um cadastro com e-mail de outro domínio, quando enviar, então a
   conta fica Pendente e aparece "Cadastro enviado, aguarde a aprovação
   do responsável".
+- Dado um cadastro `@sinnc.com.br` ainda não confirmado, então a pessoa
+  não consegue entrar nem acessar funcionalidades protegidas.
 - Dado um e-mail já cadastrado, quando tentar cadastrar, então aparece
   "Este e-mail já está em uso".
 - Dado senha com menos de 8 caracteres, então aparece o erro e o
@@ -144,6 +157,15 @@ cada pessoa pode fazer.
   e montar o carrinho, então tudo funciona normalmente.
 - Dado o administrador, quando religar a permissão de ficha, então a
   opção "Ficha" volta a ficar disponível.
+- Dado uma conta com "Usar crédito" desligado (Feature 006), então a
+  pessoa pode consultar e recarregar o saldo, mas não pode usá-lo no
+  pagamento.
+- Dado uma compra na ficha vencida e não quitada, então novas compras
+  na ficha ficam indisponíveis, mas a conta continua Ativa e pode usar
+  o catálogo, Pix e histórico.
+- Dado que o administrador confirma a quitação de todas as compras
+  vencidas, então a restrição automática da ficha é removida; qualquer
+  restrição manual pré-existente permanece.
 
 ## Casos de borda
 - Falha no cadastro ou no login: mensagem clara e opção de tentar de
@@ -154,6 +176,8 @@ cada pessoa pode fazer.
 - Restringir a ficha de quem já tem itens na ficha: histórico e valor
   pendente continuam visíveis; só novas compras na ficha ficam
   bloqueadas
+- A restrição automática por atraso não altera o status da conta e não
+  remove restrições manuais de ficha existentes
 - Carrinho aberto quando a restrição de ficha é aplicada: ao finalizar,
   a opção "Ficha" já aparece indisponível
 - Bloqueio total vale para qualquer status anterior da conta (Ativa ou
@@ -162,8 +186,8 @@ cada pessoa pode fazer.
 ## Fora do escopo (nesta versão)
 - Segurança real (senha criptografada, token, sessão no servidor):
   chega com o back-end, Fase 5
-- Confirmação de que o e-mail pertence à pessoa (ver observação
-  abaixo)
+- Confirmação de posse do e-mail para domínios diferentes de
+  `@sinnc.com.br`; esses cadastros dependem de aprovação manual
 - Recuperação e troca de senha
 - Login por Google ou outros provedores
 - Promover outras contas a administrador (R14)
@@ -188,22 +212,23 @@ senhas reais. Bloquear só vale no navegador de quem está testando; a
 garantia real (derrubar a sessão em outros dispositivos) é do back-end.
 
 ### Para a Fase 5
-A regra "e-mail da SINNC entra direto" só é segura se o sistema
-confirmar que a pessoa realmente tem aquele e-mail (link de confirmação
-enviado por e-mail). Sem isso, qualquer pessoa digita um endereço da
-SINNC que não é dela e entra sem aprovação. Essa verificação precisa
-estar na spec do back-end.
+A conta `@sinnc.com.br` só pode ser ativada após confirmação real do
+endereço por link enviado por e-mail. A versão mock pode simular o fluxo,
+mas não deve ser usada com senhas reais. Contas de outros domínios
+continuam pendentes até aprovação manual.
 
 ## Decisões já tomadas
 - Identificador de acesso: e-mail
-- E-mail da SINNC entra direto; e-mail de outro domínio precisa de
-  aprovação do administrador
+- E-mail `@sinnc.com.br` fica Pendente até confirmação por link e então
+  entra como Ativo; e-mail de outro domínio fica Pendente até aprovação
+  manual, sem confirmação por link nesta versão
 - O administrador gerencia os acessos e pode restringir mesmo
   colaboradores da SINNC
 - Duas formas de restrição: bloqueio total e restrição parcial (ficha)
+- Quando a Feature 006 for implementada, "Usar crédito" será uma
+  permissão separada, que bloqueia somente o uso do saldo em compras
 - Primeira versão com um administrador fixo nos dados mock
-
-## Perguntas em aberto
-- Qual é o domínio exato do e-mail da SINNC?
-- O que acontece com um cadastro recusado? Sugestão: a conta fica
-  "Bloqueada", o que impede um novo cadastro com o mesmo e-mail
+- Cadastro recusado fica **Bloqueado**; o mesmo e-mail não pode ser
+  cadastrado novamente
+- Os perfis Usuário e Administrador são exclusivos na primeira versão;
+  o Administrador não realiza compras como colaborador

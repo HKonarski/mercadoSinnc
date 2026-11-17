@@ -20,8 +20,9 @@ precisar procurar na lista.
 - R2. Antes de abrir a câmera, a pessoa é informada de que precisa
   permitir o acesso. Se negar, vê uma mensagem explicando como liberar
   e a alternativa de digitar o código (R8)
-- R3. Ao reconhecer um código, o leitor para e identifica o item
-  cadastrado com aquele código
+- R3. Ao reconhecer um código, o leitor identifica o item cadastrado
+  com aquele código. No modo contínuo, o item é adicionado à lista da
+  sessão e o leitor permanece ativo para novas leituras
 - R4. A leitura reconhece os formatos de código usados em produtos de
   varejo (no mínimo EAN-13 e EAN-8)
 - R5. Há um retorno visual claro quando o código é lido
@@ -44,6 +45,9 @@ precisar procurar na lista.
   regra da Feature 002: desabilitada para item indisponível e exigindo
   login
 - R10. No resultado há também "Escanear outro", que volta ao leitor
+- R10.1. No modo de leitura contínua, cada leitura adiciona uma unidade
+  pela mesma regra da Feature 002; novas leituras do mesmo código
+  aumentam a quantidade da mesma linha, respeitando o estoque
 - R11. Item não encontrado: mensagem "Produto não encontrado" com as
   opções de tentar de novo, digitar o código ou buscar pelo nome no
   catálogo
@@ -61,6 +65,11 @@ precisar procurar na lista.
   barras", então o sistema pede permissão da câmera e abre o leitor.
 - Dado um código cadastrado, quando a câmera ler, então o leitor para e
   aparece o resultado com nome, preço e quantidade.
+- Dado o modo de leitura contínua, quando a câmera reconhecer vários
+  códigos, então cada item é adicionado à sessão e o leitor permanece
+  aberto até a pessoa encerrar a leitura.
+- Dado que o mesmo código é lido novamente de forma deliberada, então a
+  quantidade do item aumenta em 1, respeitando o estoque.
 - Dado que a permissão da câmera foi negada, então aparece a mensagem
   explicativa e o campo para digitar o código.
 - Dado que fechei o leitor, então a câmera é desligada.
@@ -143,10 +152,6 @@ Não fazem parte da spec, mas o plano precisa tratar:
 ## Decisões já tomadas
 - O usuário escaneia o código de barras para ver o preço ou comprar
 - Consulta de preço sem login; compra exige login
-
-## Perguntas em aberto
-- Alguns itens do mercadinho vêm sem código de barras comercial (ex.:
-  salgados ou bolos feitos na casa)? Se sim, o administrador gera um
-  código interno e imprime a etiqueta? (impacta a Feature 008)
-- Vale oferecer, em uma versão futura, a leitura de vários itens em
-  sequência, para quem leva mais de um produto?
+- A leitura contínua de vários itens é suportada na primeira versão
+- Produtos sem código comercial recebem um código interno único gerado
+  pelo administrador, com etiqueta utilizável pelo leitor

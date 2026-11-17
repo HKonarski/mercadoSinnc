@@ -43,8 +43,9 @@ a conta feita de cabeça ou na ficha de papel.
   (ex.: 3 itens), visível de qualquer tela
 - R12. O carrinho vazio mostra "Seu carrinho está vazio" e um atalho
   para voltar ao catálogo
-- R13. O carrinho é mantido ao recarregar a página e pertence ao
-  usuário logado (Feature 004, R13)
+- R13. O carrinho é mantido ao recarregar a página enquanto a sessão
+  estiver ativa e pertence ao usuário logado. Ao fazer logout, o
+  carrinho é descartado
 
 ### Seguir para o pagamento
 - R14. O carrinho tem a ação "Ir para o pagamento", que leva à Feature
@@ -99,6 +100,8 @@ a conta feita de cabeça ou na ficha de papel.
   atalho para o catálogo.
 - Dado um carrinho com itens, quando recarregar a página, então os
   itens continuam lá.
+- Dado um carrinho com itens, quando o usuário fizer logout, então o
+  carrinho é descartado.
 - Dado um usuário diferente que entra no mesmo navegador, então ele não
   vê o carrinho de outra pessoa.
 
@@ -122,9 +125,8 @@ a conta feita de cabeça ou na ficha de papel.
 - **Nome muito longo:** não quebrar o layout
 - **Falha ao conferir estoque ou preço:** mensagem de erro com opção de
   tentar de novo, sem perder o carrinho
-- **Conta bloqueada ou sessão encerrada com carrinho cheio:** a pessoa
-  perde o acesso ao carrinho; os itens não são apagados do
-  armazenamento da conta (Feature 004, R17 e R21)
+- **Conta bloqueada com carrinho cheio:** a pessoa perde acesso às ações
+  protegidas. O carrinho é descartado quando a sessão termina por logout
 
 ## Fora do escopo
 - Pagamento, registro na ficha e comprovante (Feature 005)
@@ -149,11 +151,10 @@ a conta feita de cabeça ou na ficha de papel.
 ## Decisões já tomadas
 - O usuário monta o carrinho e vê o valor total antes de pagar
 - O carrinho exige login (Feature 004)
-
-## Perguntas em aberto
-- O estoque é baixado automaticamente quando a compra é registrada, ou o
-  administrador só confere e ajusta depois? (impacta a Feature 005)
-- Ao fazer logout, o carrinho deve ser mantido para o próximo login da
-  mesma pessoa ou descartado? Sugestão: mantido (R13)
-- Existe um limite de itens ou de valor por compra? Sugestão: sem limite
-  na primeira versão
+- O estoque é baixado quando a compra é registrada, tanto para Pix como
+  para Ficha
+- Cancelamento não devolve estoque automaticamente; uma devolução física
+  deve ser conferida e registrada como ajuste separado pelo administrador
+- Ao fazer logout, o carrinho é descartado
+- Não há limite adicional de itens ou valor por compra na primeira
+  versão; vale o limite do estoque disponível

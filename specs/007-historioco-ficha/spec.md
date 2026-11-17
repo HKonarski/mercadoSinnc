@@ -1,8 +1,5 @@
 # Feature 007: Histórico e valor pendente
 
-Pontos marcados com **[a confirmar]** são propostas à espera de
-aprovação.
-
 ## Objetivo
 Permitir que o usuário acompanhe tudo o que comprou, quanto ainda deve
 na ficha e em que pé está cada comprovante, sem depender da ficha de
@@ -25,15 +22,15 @@ Cancelada), comprovante e valor pendente vêm da Feature 005.
   compras com status Pendente, em R$ com 2 casas decimais
 - R2. Mostra também, à parte, o valor **em conferência** (compras
   Aguardando conferência), para a pessoa saber o que já pagou e ainda
-  não foi confirmado **[a confirmar]**
+  não foi confirmado; esse valor não é somado ao valor pendente
 - R3. Mostra o resumo do período escolhido (mês atual por padrão): total
-  comprado, total pago e total pendente **[a confirmar]**
+  comprado, total pago e total pendente
 - R4. Compras canceladas não entram em nenhum dos valores
 
 ### Histórico
 - R5. Lista as compras do usuário, da mais recente para a mais antiga,
-  com número, data, total, forma de pagamento, status e um resumo dos
-  itens
+  com número, data, total, forma de pagamento, status, vencimento quando
+  for compra na Ficha e um resumo dos itens
 - R6. A lista pode ser filtrada por **status** (Todas, Pendentes, Em
   conferência, Pagas e Canceladas) e por **período** (mês)
 - R7. Listas longas são mostradas aos poucos, com a ação "Ver mais"
@@ -41,7 +38,8 @@ Cancelada), comprovante e valor pendente vêm da Feature 005.
 
 ### Detalhe da compra
 - R9. Abrir uma compra mostra: itens (nome, preço unitário na época da
-  compra, quantidade e subtotal), total, forma de pagamento e status
+  compra, quantidade e subtotal), total, forma de pagamento, status e,
+  para compra na Ficha, a data de vencimento
 - R10. O detalhe mostra o andamento da compra, com data de cada mudança
   de status (por exemplo: registrada, comprovante enviado, paga)
 - R11. Mostra o comprovante enviado (nome do arquivo e data) e, se foi
@@ -69,15 +67,18 @@ Cancelada), comprovante e valor pendente vêm da Feature 005.
 - Dado compras Pendentes de R$ 10,00 e R$ 5,00, então o valor pendente
   mostra "R$ 15,00".
 - Dado uma compra Aguardando conferência de R$ 8,00, então ela aparece
-  em "Em conferência" e **não** no valor pendente. **[a confirmar]**
+  em "Em conferência" e **não** no valor pendente.
 - Dado uma compra Cancelada, então ela não entra em nenhum valor.
 - Dado nenhuma compra pendente, então aparece "Você não tem pendências".
 - Dado o mês atual, então o resumo mostra total comprado, pago e
-  pendente do mês. **[a confirmar]**
+  pendente do mês.
 
 ### Histórico
 - Dado várias compras, quando abrir o histórico, então a mais recente
   aparece primeiro.
+- Dado uma compra na Ficha, então o histórico mostra o vencimento no dia
+  15 do mês seguinte ou no próximo dia útil quando a data cair em fim de
+  semana ou feriado.
 - Dado o filtro "Pendentes" marcado, então aparecem só compras Pendentes.
 - Dado o filtro de um mês, então aparecem só as compras daquele mês.
 - Dado mais compras do que cabem na tela, então aparece "Ver mais" e,
@@ -85,6 +86,8 @@ Cancelada), comprovante e valor pendente vêm da Feature 005.
 - Dado dois usuários diferentes, então cada um vê só as próprias compras.
 - Dado um usuário sem compras, então aparece "Você ainda não fez
   compras".
+- Dado um registro de compra antigo, então ele continua disponível no
+  histórico, sem prazo de expiração.
 
 ### Detalhe
 - Dado uma compra aberta, então aparecem itens, preços da época, total,
@@ -141,15 +144,7 @@ Cancelada), comprovante e valor pendente vêm da Feature 005.
   somente em memória, sem autenticação nem persistência
 - O valor pendente do protótipo soma somente compras "Pendente";
   compras "Aguardando conferência" são mostradas separadamente
+- O histórico não tem prazo de expiração; todos os registros permanecem
+  consultáveis
 - O Pix do protótipo é um código claramente identificado como
   demonstrativo e não pagável; não simula confirmação de pagamento
-
-## Perguntas em aberto
-- **Em conferência:** mostrar à parte do valor pendente (R2) ou somar
-  tudo em um único "valor pendente"?
-- **Resumo do período:** o resumo mensal com total comprado, pago e
-  pendente (R3) vale a pena, ou basta o valor pendente? Ele atende ao
-  hábito de acompanhar quanto se gasta no mês
-- **Período padrão:** mês atual, ou todas as compras?
-- **Quanto tempo o histórico fica disponível:** sem limite, ou só os
-  últimos meses?

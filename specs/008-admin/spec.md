@@ -1,8 +1,5 @@
 # Feature 008: Área do administrador
 
-Pontos marcados com **[a confirmar]** são propostas à espera de
-aprovação.
-
 ## Objetivo
 Dar ao responsável pelo mercadinho um lugar único para manter o catálogo
 e o estoque, conferir comprovantes e dar baixa nos valores pendentes, e
@@ -27,25 +24,28 @@ controlar quem acessa e o que cada pessoa pode fazer.
   categoria (obrigatória), preço (maior que zero, 2 casas decimais),
   quantidade inicial (inteiro maior ou igual a zero), estoque mínimo
   (inteiro maior ou igual a zero; 0 = sem mínimo) e código de barras
+  comercial ou código interno gerado pelo sistema
 - R4. O código de barras é **único**: o sistema não aceita dois itens com
   o mesmo código (Feature 003)
 - R5. Editar qualquer campo do item. Mudar o preço vale só para novas
   compras; as compras antigas mantêm o preço da época (Feature 005, R7)
 - R6. **Ajustar o estoque** com entrada (reposição) e correção. Cada
   ajuste registra data, tipo, quantidade, estoque depois e motivo
-  (opcional) **[a confirmar]**
+  obrigatório
 - R7. **Ocultar** e **reexibir** um item (Feature 001, R14). Reexibir
   exige informar a quantidade disponível. Ocultar não apaga nada
 - R8. Itens **não são excluídos**; o caminho é ocultar, para preservar o
   histórico de compras
 - R9. Para itens sem código de barras comercial, o administrador pode
-  gerar um código interno **[a confirmar]**
+  gerar um código interno único e imprimir/usar uma etiqueta para
+  leitura (Feature 003)
 
 ### Categorias
 - R10. Cadastrar, renomear e remover categorias, com nome único (Feature
   001, R10)
 - R11. Uma categoria com itens não pode ser removida; os itens precisam
-  ser movidos antes **[a confirmar]**
+  ser movidos antes. A remoção e as movimentações relacionadas ficam
+  registradas na auditoria
 
 ### Configurações
 - R12. Ligar e desligar o **aviso de estoque mínimo** (Feature 001,
@@ -64,20 +64,25 @@ controlar quem acessa e o que cada pessoa pode fazer.
 - R17. **Dar baixa manual** em compras Pendentes de qualquer pessoa (por
   exemplo, pagamento em dinheiro), com observação, registrando data e
   quem deu a baixa (Feature 004, R22)
-- R18. **Cancelar** uma compra, com motivo: ela passa a **Cancelada**, não
-  é apagada e os itens voltam ao estoque **[a confirmar]**
+- R18. **Cancelar** uma compra, com motivo: ela passa a **Cancelada** e
+  não é apagada. O cancelamento não devolve estoque automaticamente;
+  eventual devolução física deve ser conferida e registrada como ajuste
+  separado de estoque
 - R19. Ver o valor pendente por pessoa e o total geral de pendências, com
   a lista de compras por pessoa e por status
 
 ### Contas e acessos
 - R20. Lista de contas com nome, e-mail, status (Ativa, Pendente,
-  Bloqueada), permissão "Comprar na ficha" e valor pendente
+  Bloqueada), permissões "Comprar na ficha" e "Usar crédito" (quando
+  Feature 006 estiver implementada), valor pendente e compras na Ficha
+  vencidas
 - R21. **Aprovar** ou **recusar** cadastros Pendentes (Feature 004, R16).
   Um cadastro recusado fica "Bloqueada", o que impede um novo cadastro
-  com o mesmo e-mail **[a confirmar]**
+  com o mesmo e-mail (decisão da Feature 004)
 - R22. **Bloquear** e **desbloquear** contas, com motivo opcional (Feature
   004, R17 e R20). **Restringir** e liberar a permissão "Comprar na
-  ficha" (Feature 004, R18)
+  ficha" (Feature 004, R18) e, após a Feature 006, a permissão
+  independente "Usar crédito"
 - R23. O administrador não pode bloquear a si mesmo nem o único
   administrador (Feature 004, casos de borda)
 - R24. O detalhe da conta mostra dados, status, permissões, compras e
@@ -88,11 +93,12 @@ controlar quem acessa e o que cada pessoa pode fazer.
 - R25. Toda ação sensível do administrador fica registrada, sem poder ser
   editada: confirmar e recusar comprovante, baixa manual, cancelamento,
   ajuste de estoque, mudança de preço, bloqueio, restrição e alteração
-  de configuração. O registro guarda data, quem fez e o que mudou
-  **[a confirmar]**
+  de configuração, criação/edição/remoção de categorias e movimentação
+  de itens entre categorias. O registro guarda data, responsável e
+  valores anteriores e novos, quando aplicável
 - R26. A tela inicial da área mostra um resumo: comprovantes aguardando
   conferência, cadastros pendentes, itens indisponíveis ou com estoque
-  baixo e valor pendente total **[a confirmar]**
+  baixo e valor pendente total
 
 ### Geral
 - R27. As telas se adaptam a mobile, tablet e desktop e funcionam por
@@ -114,6 +120,8 @@ controlar quem acessa e o que cada pessoa pode fazer.
   código já está em uso" e o item não é criado.
 - Dado um cadastro válido, então o item aparece no catálogo (se não
   estiver oculto) com a categoria, o preço e a quantidade informados.
+- Dado um produto sem código de barras comercial, então o administrador
+  pode gerar um código interno único e usar sua etiqueta no leitor.
 - Dado a mudança de preço de um item, então novas compras usam o preço
   novo e compras antigas mostram o antigo.
 - Dado um item oculto, então ele continua na lista do administrador e
@@ -124,13 +132,17 @@ controlar quem acessa e o que cada pessoa pode fazer.
   com "Disponível: 10".
 - Dado um item já comprado, então não existe ação de excluir.
 - Dado um ajuste de estoque, então ele aparece no registro de
-  movimentações com data, tipo, quantidade e estoque depois.
+  movimentações com data, tipo, quantidade, estoque depois e motivo.
+- Dado um ajuste de estoque sem motivo, então o sistema não permite
+  salvá-lo.
 
 ### Categorias
 - Dado o nome de uma categoria já existente, então aparece o erro de
   nome em uso.
 - Dado uma categoria com itens, quando tentar remover, então o sistema
-  impede e pede para mover os itens. **[a confirmar]**
+  impede e pede para mover todos os itens antes.
+- Dado uma categoria removida após mover seus itens, então a remoção e
+  as movimentações ficam no registro de auditoria.
 - Dado uma categoria nova com um item visível, então ela aparece no
   filtro do catálogo.
 
@@ -152,8 +164,9 @@ controlar quem acessa e o que cada pessoa pode fazer.
 - Dado uma compra Pendente, quando o administrador der baixa manual com
   uma observação, então ela passa a "Paga" com data e responsável.
 - Dado uma compra, quando o administrador cancelar com um motivo, então
-  ela passa a "Cancelada", não entra nos valores e os itens voltam ao
-  estoque. **[a confirmar]**
+  ela passa a "Cancelada", não entra nos valores e não altera o estoque
+  automaticamente. Se os itens forem devolvidos fisicamente, o
+  administrador registra um ajuste de estoque separado.
 - Dado uma pessoa com compras pendentes, então o administrador vê o
   valor pendente dela e o total geral.
 
@@ -161,7 +174,7 @@ controlar quem acessa e o que cada pessoa pode fazer.
 - Dado um cadastro Pendente, quando aprovar, então a conta passa a
   Ativa.
 - Dado um cadastro Pendente, quando recusar, então a conta fica
-  Bloqueada. **[a confirmar]**
+  Bloqueada e o mesmo e-mail não pode ser cadastrado novamente.
 - Dado uma conta, quando bloquear, então a pessoa perde o acesso
   (Feature 004).
 - Dado uma conta bloqueada com valor pendente, então o administrador
@@ -170,10 +183,12 @@ controlar quem acessa e o que cada pessoa pode fazer.
   sistema impede.
 - Dado a restrição "Comprar na ficha" desligada, então a pessoa vê "Ficha"
   indisponível no pagamento.
+- Dado uma compra na Ficha vencida e não quitada, então a conta aparece
+  com atraso e novas compras na Ficha são restringidas automaticamente.
 
 ### Controle
-- Dado qualquer ação sensível, então ela aparece no registro com data,
-  quem fez e o que mudou. **[a confirmar]**
+- Dado qualquer ação sensível, então ela aparece no registro imutável
+  com data, responsável e valores anteriores e novos, quando aplicável.
 - Dado um registro de ação, então não existe ação de editar ou apagar.
 
 ## Casos de borda
@@ -185,8 +200,9 @@ controlar quem acessa e o que cada pessoa pode fazer.
 - **Preço alterado com o item em carrinhos abertos:** os carrinhos usam o
   preço novo e avisam a pessoa (Feature 002)
 - **Valor do comprovante diferente da soma das compras:** o administrador
-  decide: confirma só as compras que o valor cobre, ou recusa com motivo
-  **[a confirmar]**
+  pode confirmar compras inteiras cobertas pelo valor comprovado; a
+  diferença restante é tratada manualmente, sem crédito ou reembolso
+  automático
 - **Item ocultado com o item no carrinho de alguém:** o item passa a
   indisponível no carrinho (Feature 002)
 - **Dois administradores editando o mesmo item:** garantia do back-end
@@ -225,24 +241,24 @@ controlar quem acessa e o que cada pessoa pode fazer.
 - O administrador confere comprovantes e dá baixa nos valores pendentes
 - O administrador gerencia acessos: aprovar cadastros, bloquear
   (inclusive ex-funcionários) e restringir a ficha
+- Quando a Feature 006 for implementada, o administrador também poderá
+  gerenciar a permissão independente "Usar crédito"
 - Um único administrador na primeira versão
-
-## Perguntas em aberto
-- **Código de barras:** é obrigatório em todo item? Itens sem código
-  comercial (salgados ou bolos da casa) recebem um código interno
-  gerado pelo sistema (R9)?
-- **Cancelamento de compra:** os itens voltam ao estoque (R18)?
-- **Categoria em uso:** impedir a remoção (R11) ou mover os itens para
-  uma categoria escolhida na hora?
-- **Cadastro recusado:** fica "Bloqueada" (R21)?
-- **Registro de ações:** vale o registro de auditoria completo (R25) já
-  na primeira versão?
-- **Tela inicial com resumo (R26):** vale a pena na primeira versão?
-- **Movimentações de estoque (R6):** guardar o histórico de ajustes, ou
-  só o estoque atual?
-- **O administrador também compra?** O responsável pelo mercadinho
-  provavelmente também consome e usa a ficha. Se sim, a conta dele
-  precisa funcionar como Usuário e como Administrador (hoje os perfis
-  são separados na Feature 004)
-- **Divergência de valor do comprovante (casos de borda):** confirmar
-  só as compras que o valor cobre, ou sempre recusar?
+- Categorias com produtos não podem ser removidas até que todos sejam
+  movidos; a remoção e a movimentação ficam registradas na auditoria
+- Todo ajuste de estoque exige motivo e mantém histórico completo de
+  movimentações
+- Toda ação administrativa sensível, inclusive ações de categoria,
+  mantém registro imutável com data, responsável e alterações
+- A página inicial administrativa mostra o resumo operacional definido
+  em R26
+- Produtos sem código de barras comercial recebem código interno único
+  gerado pelo administrador, utilizável em etiqueta (Feature 003)
+- O perfil Administrador não realiza compras como colaborador na
+  primeira versão (Feature 004)
+- Cancelar uma compra não altera o estoque; eventual retorno físico é
+  registrado em ajuste separado
+- Compras na Ficha vencem no dia 15 do mês seguinte ou no próximo dia
+  útil quando a data cair em fim de semana ou feriado; novas compras na
+  Ficha são restringidas automaticamente após o vencimento até a
+  confirmação da quitação pelo administrador
