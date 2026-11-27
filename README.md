@@ -62,6 +62,10 @@ pessoais no repositório.
 O arquivo também contém produtos demonstrativos para conferir estados como
 estoque zero, nome longo e item oculto; esses registros não representam o
 estoque real do mercadinho.
+Na demonstração, adicionar um produto ao carrinho mostra o total; é possível
+remover itens pelo botão X e registrar na ficha para reduzir o estoque exibido.
+Essa baixa é mantida apenas na página atual: não altera o JSON e é reiniciada
+ao recarregar.
 
 ### Imagens dos produtos
 

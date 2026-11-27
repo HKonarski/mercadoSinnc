@@ -17,15 +17,15 @@ export function Cabecalho({
         <a
           href={import.meta.env.BASE_URL}
           aria-label="Mercadinho SINNC - início"
-          className="hidden min-w-0 items-center gap-2 lg:flex lg:gap-3"
+          className="flex min-w-0 items-center gap-1.5 sm:gap-2 lg:gap-3"
         >
-          <span className="truncate text-base font-bold tracking-tight sm:text-lg">
+          <span className="truncate text-sm font-bold tracking-tight sm:text-base lg:text-lg">
             Mercadinho
           </span>
           <img
             src={`${import.meta.env.BASE_URL}assets/img/logo-sinnc.png`}
             alt="SINNC"
-            className="h-10 w-14 shrink-0 object-contain brightness-0 invert sm:h-11 sm:w-16"
+            className="h-8 w-11 shrink-0 object-contain brightness-0 invert sm:h-10 sm:w-14 lg:h-11 lg:w-16"
           />
         </a>
         <div className="col-start-2 flex shrink-0 items-center gap-1 lg:col-start-3">
@@ -43,7 +43,7 @@ export function Cabecalho({
               <circle cx="12" cy="7" r="4" />
               <path d="M3 21a9 9 0 0 1 18 0H3Z" />
             </svg>
-            Usuário
+            <span className="hidden sm:inline">Usuário</span>
           </button>
           {mostrarMenuCatalogo && (
             <button

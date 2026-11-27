@@ -3,6 +3,7 @@ import { useFiltroCatalogo } from '../../hooks/useFiltroCatalogo'
 import { useProdutos } from '../../hooks/useProdutos'
 import type { Catalogo, FiltrosCatalogo, Visualizacao } from '../../types'
 import { categoriasComItens } from '../../utils/categoriasComItens'
+import { formatarMoeda } from '../../utils/formatarMoeda'
 import { Carregando } from '../ui/Carregando'
 import { Erro } from '../ui/Erro'
 import { Rodape } from '../ui/Rodape'
@@ -84,6 +85,10 @@ function PaginaCatalogo({
   secaoSelecionada: SecaoCatalogo | null
   selecionarSecao: (secao: SecaoCatalogo | null) => void
 }) {
+  const [produtos, setProdutos] = useState(catalogo.produtos)
+  const [quantidadesNoCarrinho, setQuantidadesNoCarrinho] = useState<
+    Record<string, number>
+  >({})
   const {
     busca,
     setBusca,
@@ -92,12 +97,53 @@ function PaginaCatalogo({
     visualizacao,
     setVisualizacao,
     produtosFiltrados,
-  } = useFiltroCatalogo(catalogo.produtos, catalogo.configuracao)
-  const categorias = categoriasComItens(catalogo.categorias, catalogo.produtos)
+  } = useFiltroCatalogo(produtos, catalogo.configuracao)
+  const categorias = categoriasComItens(catalogo.categorias, produtos)
+  const itensCarrinho = produtos
+    .map((produto) => ({
+      produto,
+      quantidade: quantidadesNoCarrinho[produto.id] ?? 0,
+    }))
+    .filter(({ quantidade }) => quantidade > 0)
+  const valorCarrinhoCentavos = itensCarrinho.reduce(
+    (total, { produto, quantidade }) =>
+      total + produto.precoCentavos * quantidade,
+    0,
+  )
 
   const atualizarFiltros = (proximos: FiltrosCatalogo) => setFiltros(proximos)
   const atualizarVisualizacao = (proxima: Visualizacao) =>
     setVisualizacao(proxima)
+  const adicionarAoCarrinho = (produtoId: string) => {
+    const produto = produtos.find((item) => item.id === produtoId)
+    if (!produto || produto.quantidade === 0) {
+      return
+    }
+    setQuantidadesNoCarrinho((atuais) => {
+      const quantidadeAtual = atuais[produtoId] ?? 0
+      if (quantidadeAtual >= produto.quantidade) {
+        return atuais
+      }
+      return { ...atuais, [produtoId]: quantidadeAtual + 1 }
+    })
+  }
+  const removerDoCarrinho = (produtoId: string) => {
+    setQuantidadesNoCarrinho((atuais) => {
+      const atualizadas = { ...atuais }
+      delete atualizadas[produtoId]
+      return atualizadas
+    })
+  }
+  const registrarNaFicha = () => {
+    setProdutos((atuais) =>
+      atuais.map((produto) => ({
+        ...produto,
+        quantidade:
+          produto.quantidade - (quantidadesNoCarrinho[produto.id] ?? 0),
+      })),
+    )
+    setQuantidadesNoCarrinho({})
+  }
 
   return (
     <div className="flex min-h-screen min-w-0 flex-col bg-slate-50 text-slate-900">
@@ -112,7 +158,13 @@ function PaginaCatalogo({
             Voltar ao catálogo
           </button>
           {secaoSelecionada === 'pagamento' ? (
-            <FormasPagamento configuracao={catalogo.configuracao} />
+            <FormasPagamento
+              configuracao={catalogo.configuracao}
+              itensCarrinho={itensCarrinho}
+              valorCarrinhoCentavos={valorCarrinhoCentavos}
+              onRemoverDoCarrinho={removerDoCarrinho}
+              onRegistrarNaFicha={registrarNaFicha}
+            />
           ) : (
             <ComoComprar abrirTela={abrirTela} />
           )}
@@ -129,12 +181,37 @@ function PaginaCatalogo({
           />
           <ListaProdutos
             produtos={produtosFiltrados}
-            produtosCadastrados={catalogo.produtos}
+            produtosCadastrados={produtos}
             configuracao={catalogo.configuracao}
             visualizacao={visualizacao}
+            quantidadesNoCarrinho={quantidadesNoCarrinho}
+            adicionarAoCarrinho={adicionarAoCarrinho}
           />
+          {valorCarrinhoCentavos > 0 && (
+            <section
+              aria-label="Resumo do carrinho"
+              className="sticky bottom-3 z-30 col-span-full flex items-center justify-between gap-3 rounded-xl border border-blue-200 bg-white p-3 shadow-lg lg:hidden"
+            >
+              <p className="font-semibold text-slate-900">
+                Carrinho: {formatarMoeda(valorCarrinhoCentavos)}
+              </p>
+              <button
+                type="button"
+                onClick={() => selecionarSecao('pagamento')}
+                className="rounded-lg bg-blue-700 px-3 py-2 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+              >
+                Abrir pagamento
+              </button>
+            </section>
+          )}
           <div className="hidden min-w-0 space-y-6 lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:block">
-            <FormasPagamento configuracao={catalogo.configuracao} />
+            <FormasPagamento
+              configuracao={catalogo.configuracao}
+              itensCarrinho={itensCarrinho}
+              valorCarrinhoCentavos={valorCarrinhoCentavos}
+              onRemoverDoCarrinho={removerDoCarrinho}
+              onRegistrarNaFicha={registrarNaFicha}
+            />
             <ComoComprar abrirTela={abrirTela} />
           </div>
         </main>

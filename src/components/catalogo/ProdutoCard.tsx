@@ -7,9 +7,13 @@ const extensoesImagem = ['jfif', 'jpg', 'jpeg', 'jpe', 'png', 'webp']
 export function ProdutoCard({
   produto,
   configuracao,
+  quantidadeNoCarrinho,
+  adicionarAoCarrinho,
 }: {
   produto: Produto
   configuracao: Configuracao
+  quantidadeNoCarrinho: number
+  adicionarAoCarrinho: (produtoId: string) => void
 }) {
   const [indiceExtensao, setIndiceExtensao] = useState(0)
   const indisponivel = estaIndisponivel(produto)
@@ -81,7 +85,8 @@ export function ProdutoCard({
       </div>
       <button
         type="button"
-        disabled={indisponivel}
+        disabled={indisponivel || quantidadeNoCarrinho >= produto.quantidade}
+        onClick={() => adicionarAoCarrinho(produto.id)}
         className="mt-4 rounded-lg bg-blue-700 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
       >
         Adicionar ao carrinho
