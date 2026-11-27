@@ -89,13 +89,13 @@ dependem das próximas funcionalidades.
 | 1 | Wireframes mobile, tablet e desktop | ✅ Entregue; PR #1 integrado |
 | 2 | Página inicial com Tailwind CSS | ✅ Entregue; PR #2 integrado |
 | 3 | Componentes, serviços, hooks e regras do catálogo | ✅ Entregue; PR #3 integrado |
-| 4 | Leitura do catálogo a partir de JSON | 🚧 T20 validada; falta concluir T21 e abrir o PR |
+| 4 | Leitura do catálogo a partir de JSON | ✅ Entregue; PR #4 integrado |
 | 5 e 6 | Back-end em Java e banco de dados SQL | ⏳ Planejadas |
 
 Na Fase 4, o serviço e a leitura do JSON estão implementados. A edição do
 arquivo e a recarga da página foram verificadas no navegador; o build de
 produção também carregou o catálogo. A entrega prevista era 13/11/2026.
-Testes (29), build, lint e `npm run format:check` passaram na validação local.
+Testes (31), build, lint e `npm run format:check` passaram na validação local.
 
 ## Como o projeto é desenvolvido (SDD)
 
@@ -115,7 +115,7 @@ specs/
 
 | Funcionalidade | Spec | Plano | Tarefas |
 |---|---|---|---|
-| 001 Catálogo de produtos | ✅ | ✅ | 🚧 Fase 3 concluída; T20 validada; T21/PR pendente |
+| 001 Catálogo de produtos | ✅ | ✅ | ✅ T20 e T21 concluídas |
 | 002 Carrinho | ✅ | ⏳ | ⏳ |
 | 003 Leitura de código de barras | ✅ | ⏳ | ⏳ |
 | 004 Identificação do usuário | ✅ | ⏳ | ⏳ |

@@ -4,6 +4,8 @@ Entrega prevista: 13/11/2026 (cronograma do professor).
 
 Branch: `feature/fase-4-json`.
 
+Situação: **entregue; PR #4 integrado**.
+
 ## Objetivo
 Trocar a fonte dos dados do catálogo: em vez de módulos TypeScript, os
 produtos, as categorias e a configuração passam a vir de um arquivo
@@ -90,7 +92,7 @@ Regras do formato:
 - [x] `npm test`, `npm run build`, `npm run lint` e `npm run format`
       sem erros
 - [x] README explica onde fica o JSON e como editar os dados
-- [ ] PR aberto
+- [x] PR aberto e integrado (#4)
 
 ## Riscos e pontos a confirmar
 - **"JSON externo":** o PDF diz "um JSON externo". Pode significar um

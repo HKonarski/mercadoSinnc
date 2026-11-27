@@ -275,11 +275,11 @@ Marque `[x]` ao concluir.
   arquivo e recarregar), sem dados de produto no código, e os testes
   passam
 
-### [ ] T21 - Entrega da Fase 4
+### [x] T21 - Entrega da Fase 4
 - Conferir o checklist do marco `fase-4.md`
 - `npm run build` seguido de `npm run preview` carrega o JSON
 - Abrir o PR da branch `feature/fase-4-json`
-- Pronto quando: o PR está aberto com a descrição ligada ao marco
+- Pronto quando: o PR está aberto e integrado com a descrição ligada ao marco
 
 ## Checklist de aceite (T18)
 
