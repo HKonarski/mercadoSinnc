@@ -51,6 +51,14 @@ npm run lint     # verifica o código
 npm run format   # formata o código
 ```
 
+### Deploy no GitHub Pages
+
+O workflow `.github/workflows/deploy-pages.yml` publica o site automaticamente
+quando há um push na branch `main`. Para ativar, em **Settings → Pages**, defina
+**Source** como **GitHub Actions**. Também é possível iniciar a publicação
+manualmente pela aba **Actions**. O build configura automaticamente o caminho
+do projeto para funcionar na URL do GitHub Pages.
+
 ### Dados do catálogo
 
 Os produtos, as categorias e as configurações do catálogo ficam em
