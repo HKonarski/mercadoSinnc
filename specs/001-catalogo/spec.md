@@ -2,8 +2,7 @@
 
 **Versão 3.** Fecha as perguntas em aberto da v2: limite de "Últimas
 unidades" configurável, busca por trecho, categorias cadastradas pelo
-administrador, itens ocultos e filtros recolhíveis no celular. Pontos
-marcados com **[a confirmar]** são interpretações à espera de aprovação.
+administrador, itens ocultos e filtros recolhíveis no celular.
 
 ## Histórico de alterações
 - **v1:** catálogo com lista, preço, estoque, estoque mínimo opcional,
@@ -45,7 +44,9 @@ precisar conferir a tabela de preços em papel.
 ### Buscar
 - R3. Buscar itens digitando em um campo de busca, sem diferenciar
   maiúsculas/minúsculas, acentos nem espaços repetidos. A busca é **por
-  trecho**: digitar só uma parte já mostra os itens correspondentes
+  trecho**: digitar só uma parte já mostra os itens correspondentes;
+  com várias palavras, todas devem corresponder, em qualquer ordem e
+  podendo aparecer em campos diferentes
   (ex.: "choco" mostra barra de chocolate, bolacha de chocolate, torta
   de chocolate etc.). A busca considera:
   - nome do item
@@ -63,7 +64,7 @@ precisar conferir a tabela de preços em papel.
     baixo
   - R5.3. Com o aviso ativado, cada item pode ter seu próprio estoque
     mínimo. **Mínimo 0 significa "sem mínimo"**, e itens sem mínimo não
-    exibem alerta **[a confirmar a interpretação do 0]**
+    exibem alerta
   - R5.4. Quando a quantidade disponível for menor ou igual ao mínimo
     (e maior que zero), o item exibe o aviso "Estoque baixo"
 
@@ -85,7 +86,7 @@ precisar conferir a tabela de preços em papel.
 - R11. O usuário pode filtrar a lista por:
   - **Categoria:** uma ou mais; sem nenhuma selecionada, mostra todas.
     Aparecem no filtro só as categorias que têm pelo menos um item
-    visível **[a confirmar]**
+    visível
   - **Em estoque:** só itens com quantidade maior que zero
   - **Últimas unidades:** só itens nas últimas unidades (R12)
 
@@ -119,10 +120,10 @@ precisar conferir a tabela de preços em papel.
 - R15. A caixa de filtros se adapta ao tamanho da tela, seguindo os
   wireframes da Fase 1 (`docs/wireframe-mobile`, `-tablet` e
   `-desktop`):
-  - em telas grandes, a caixa de filtros fica visível ao lado da lista
-  - em telas pequenas (celular), os filtros ficam **recolhidos atrás de
+  - no desktop, a caixa de filtros fica visível ao lado da lista
+  - em telas pequenas, incluindo celular e tablet, os filtros ficam **recolhidos atrás de
     um botão "Filtros"**, que abre e fecha o painel
-  - o botão indica quantos filtros estão ativos **[a confirmar]**
+  - o botão indica quantos filtros estão ativos
 
 ## Critérios de aceite
 
@@ -137,6 +138,9 @@ precisar conferir a tabela de preços em papel.
 - Dado o termo "choco", quando buscar, então aparecem todos os itens
   que tenham "choco" no nome ou na categoria, como "Barra de chocolate"
   e "Biscoito recheado sabor chocolate".
+- Dado o termo "bolacha chocolate", quando buscar, então aparecem os
+  itens que contenham as duas palavras em qualquer ordem e mesmo que
+  estejam distribuídas entre nome e categoria.
 - Dado o termo "salgados", quando buscar, então aparecem os itens da
   categoria Salgados e nenhum de outra categoria.
 - Dado o termo "R$ 2,50", quando buscar, então aparecem os itens com
@@ -169,18 +173,16 @@ precisar conferir a tabela de preços em papel.
 - Dado o limite padrão alterado para 5 e um item sem mínimo com estoque
   5, quando marcar "Últimas unidades", então o item aparece.
 - Dado o limite padrão 0 e um item sem mínimo com estoque 1, quando
-  marcar "Últimas unidades", então o item **não** aparece. **[a
-  confirmar]**
+  marcar "Últimas unidades", então o item **não** aparece.
 - Dado um item com mínimo 0 e estoque 1, então não aparece "Estoque
   baixo", e em "Últimas unidades" ele é avaliado pelo limite padrão.
-  **[a confirmar]**
 - Dado o aviso de estoque mínimo desativado e um item com mínimo 6 e
   estoque 5, quando marcar "Últimas unidades", então o item aparece
   apenas se o limite padrão for maior ou igual a 5.
 - Dado uma busca e um filtro de categoria ativos ao mesmo tempo, então
   aparecem só os itens que atendem aos dois.
 - Dado uma categoria sem nenhum item visível, então ela não aparece na
-  lista de filtros. **[a confirmar]**
+  lista de filtros do catálogo do usuário.
 - Dado filtros que não retornam nada, então aparece "Nenhum produto
   encontrado para esses filtros."
 
@@ -192,12 +194,14 @@ precisar conferir a tabela de preços em papel.
 ### Filtros adaptáveis
 - Dado uma tela de celular, quando abrir o catálogo, então os filtros
   estão recolhidos e aparece o botão "Filtros".
+- Dado uma tela de tablet, quando abrir o catálogo, então os filtros
+  estão recolhidos atrás do botão "Filtros".
 - Dado o botão "Filtros", quando tocar, então o painel abre; ao tocar
   de novo, o painel fecha.
 - Dado uma tela grande (desktop), quando abrir o catálogo, então a
   caixa de filtros já aparece visível, sem botão para abrir.
 - Dado filtros ativos com o painel recolhido, então o botão mostra a
-  quantidade de filtros ativos. **[a confirmar]**
+  quantidade de filtros ativos.
 - Dado que mudo o tamanho da tela, então o catálogo se adapta sem
   perder os filtros e a busca já escolhidos.
 
@@ -283,17 +287,9 @@ precisar conferir a tabela de preços em papel.
   deixá-los indisponíveis
 - Filtros recolhidos atrás de um botão no celular, adaptando-se ao
   tamanho da tela conforme os wireframes
-
-## Perguntas em aberto
-- **Valor 0:** confirmar que 0 em "estoque mínimo do item" e em "limite
-  padrão" significa "não existe" (R5.3 e R12), conforme os critérios de
-  aceite acima
-- **Busca com várias palavras:** "bolacha chocolate" deve achar "Bolacha
-  de chocolate" (todas as palavras, em qualquer ordem)? Hoje a busca
-  trata o texto digitado como um trecho único
-- **Filtro de categorias:** mostrar só as categorias que têm pelo menos
-  um item visível (R11)?
-- **Contador no botão "Filtros":** mostrar quantos filtros estão ativos
-  (R15)?
-- **Tablet:** os filtros ficam visíveis ou recolhidos? Seguir o
-  wireframe de tablet; os tamanhos de tela exatos ficam para o plano
+- Busca de várias palavras exige que todas apareçam, em qualquer ordem
+- Categorias sem produtos visíveis não aparecem nos filtros do usuário
+- O contador do botão "Filtros" mostra os filtros ativos; a visualização
+  (grade/lista) não é contada como filtro
+- No tablet, os filtros ficam recolhidos atrás do botão; no desktop,
+  ficam visíveis

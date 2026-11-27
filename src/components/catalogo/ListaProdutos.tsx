@@ -7,11 +7,15 @@ export function ListaProdutos({
   produtosCadastrados,
   configuracao,
   visualizacao,
+  quantidadesNoCarrinho,
+  adicionarAoCarrinho,
 }: {
   produtos: Produto[]
   produtosCadastrados: Produto[]
   configuracao: Configuracao
   visualizacao: Visualizacao
+  quantidadesNoCarrinho: Record<string, number>
+  adicionarAoCarrinho: (produtoId: string) => void
 }) {
   return (
     <section
@@ -41,6 +45,8 @@ export function ListaProdutos({
               key={produto.id}
               produto={produto}
               configuracao={configuracao}
+              quantidadeNoCarrinho={quantidadesNoCarrinho[produto.id] ?? 0}
+              adicionarAoCarrinho={adicionarAoCarrinho}
             />
           ))}
         </ul>

@@ -2,9 +2,8 @@
 
 **Situação:** evolução posterior. Ordem de implementação confirmada:
 concluir primeiro as Features 005, 007 e 008; implementar esta Feature
-006 depois delas. As decisões em aberto abaixo podem esperar até lá.
-Pontos marcados com **[a confirmar]** são propostas à espera de
-aprovação.
+006 depois delas. As decisões de produto estão consolidadas; os detalhes
+técnicos serão definidos no plano de implementação.
 
 ## Objetivo
 Permitir que o usuário deixe um valor antecipado no mercadinho, pago via
@@ -29,19 +28,24 @@ por compra, e o mercadinho reduz o fiado.
 ## Requisitos
 
 ### Recarga
-- R1. O usuário informa o valor da recarga. Valor livre, com mínimo e
-  máximo **[a confirmar: mínimo R$ 10,00; máximo a definir]**, com
-  atalhos de valores comuns **[a confirmar: R$ 20, R$ 50 e R$ 100]**
-- R2. O sistema gera o Pix com o valor da recarga (código "copia e cola"
-  e/ou chave com o valor), para a pessoa só colar no aplicativo do banco
+- R1. O usuário informa qualquer valor maior que zero para a recarga;
+  não há mínimo, máximo ou atalhos predefinidos na primeira versão
+- R2. O sistema gera Pix dinâmico com o valor da recarga, exibindo
+  Copia e Cola e QR Code correspondentes, conforme Feature 005
 - R3. Depois de pagar, a pessoa registra a recarga enviando o
   comprovante. A recarga fica **Aguardando confirmação** e o saldo
   **não muda** até a confirmação
 - R4. O administrador confere o comprovante e **confirma** ou
   **recusa** a recarga (a recusa exige um motivo, visível para a pessoa)
-- R5. Ao confirmar, o saldo aumenta pelo valor da recarga. Se o valor do
-  comprovante for diferente do pedido, o administrador pode confirmar o
-  valor realmente pago, com um motivo **[a confirmar]**
+- R5. Ao confirmar, o administrador registra o valor realmente pago.
+  Se for diferente do solicitado, registra também o motivo da
+  divergência. O valor efetivo é usado para quitar compras pendentes na
+  Ficha e, depois, o restante aumenta o saldo disponível
+- R5.1. Ao confirmar uma recarga, o sistema usa o valor efetivo para quitar
+  compras pendentes na Ficha, começando pela mais antiga e quitando
+  compras inteiras apenas. Se o valor restante não cobrir a próxima
+  compra pendente, a quitação automática para e o restante fica como
+  saldo de crédito
 - R6. A pessoa vê suas recargas pendentes ("Aguardando confirmação") com
   o valor, separadas do saldo disponível
 
@@ -49,18 +53,19 @@ por compra, e o mercadinho reduz o fiado.
 - R7. O saldo disponível aparece para o usuário logado no menu da conta
   e na tela de pagamento, em R$ com 2 casas decimais
 - R8. O saldo nunca fica negativo
-- R9. Pagar com crédito (Feature 005) só é possível quando o saldo cobre
-  **o valor total** da compra. Caso contrário a opção fica desabilitada
-  com a mensagem "Saldo insuficiente. Recarregue ou escolha outra forma
-  de pagamento"
-- R10. Ao pagar com crédito, o saldo é debitado na hora pelo valor total,
-  sem precisar de aprovação do administrador
+- R9. O usuário pode combinar o saldo de crédito com Pix ou Ficha para
+  completar o total da compra. A parte paga com crédito nunca excede o
+  saldo disponível; a parte restante segue as regras e permissões da
+  forma de pagamento escolhida
+- R10. Ao confirmar uma compra combinada, o valor de crédito usado é
+  debitado na hora, sem aprovação do administrador. O registro da compra
+  e o débito devem ser atômicos no back-end
 - R11. O saldo não expira, e o que sobra de um mês passa para o seguinte
-  **[a confirmar]**
 
 ### Extrato e controle
 - R12. Toda movimentação fica registrada com data, tipo (recarga,
-  compra, ajuste), valor, saldo depois da movimentação e descrição
+  quitação da Ficha, compra, ajuste), valor, saldo depois da
+  movimentação e descrição
 - R13. Movimentações nunca são editadas nem apagadas. Uma correção é uma
   nova movimentação (ajuste), para manter a trilha de auditoria
 - R14. O administrador pode fazer um **ajuste manual** de saldo, positivo
@@ -74,25 +79,36 @@ por compra, e o mercadinho reduz o fiado.
 - R16. Conta com **bloqueio total** (Feature 004, R17) não recarrega nem
   usa crédito; o saldo continua guardado e visível ao administrador
   (Feature 004, R21)
-- R17. Só o administrador confirma recargas e faz ajustes de saldo. Não
-  existe uma permissão separada "Usar crédito" na primeira versão; o
-  bloqueio total já cobre o caso **[a confirmar]**
+- R17. Só o administrador confirma recargas e faz ajustes de saldo
+- R18. A permissão "Usar crédito" é independente da permissão "Comprar na
+  ficha". Se estiver desligada, o usuário pode consultar e recarregar o
+  saldo, mas não pode usar crédito para pagar compras
 
 ### Geral
-- R18. As telas se adaptam a mobile, tablet e desktop e funcionam por
+- R19. As telas se adaptam a mobile, tablet e desktop e funcionam por
   teclado, com rótulos para leitores de tela
 
 ## Critérios de aceite
 
 ### Recarga
 - Dado um usuário logado, quando informar R$ 50,00 e confirmar, então
-  aparece o Pix com o valor de R$ 50,00 para pagar.
-- Dado um valor abaixo do mínimo, quando tentar recarregar, então aparece
-  o aviso do valor mínimo e o Pix não é gerado.
+  aparece o Pix Copia e Cola e o QR Code com o valor de R$ 50,00.
+- Dado um valor maior que zero, então a recarga pode ser solicitada sem
+  mínimo ou máximo predefinidos.
 - Dado que a pessoa enviou o comprovante, então a recarga aparece como
   "Aguardando confirmação" e o saldo disponível continua o mesmo.
-- Dado o administrador, quando confirmar uma recarga de R$ 50,00, então
-  o saldo da pessoa aumenta R$ 50,00 e a recarga passa a "Confirmada".
+- Dado o administrador, quando confirmar uma recarga de R$ 50,00 sem
+  compras pendentes na Ficha, então o saldo da pessoa aumenta R$ 50,00 e
+  a recarga passa a "Confirmada".
+- Dado o comprovante de uma recarga com valor divergente, então o
+  administrador registra o valor efetivamente pago e o motivo; somente
+  esse valor é aplicado.
+- Dado compras pendentes na Ficha e uma recarga confirmada, então o
+  valor quita as compras mais antigas inteiras; o restante, se houver,
+  entra no saldo de crédito.
+- Dado que o valor restante não cobre integralmente a próxima compra
+  pendente na Ficha, então essa compra permanece pendente e o restante
+  fica no saldo de crédito.
 - Dado o administrador, quando recusar uma recarga com um motivo, então
   o saldo não muda, a recarga passa a "Recusada" e a pessoa vê o motivo.
 
@@ -101,10 +117,13 @@ por compra, e o mercadinho reduz o fiado.
   então o saldo passa a R$ 38,00.
 - Dado um saldo de R$ 12,00 e uma compra de R$ 12,00, quando pagar com
   crédito, então a compra é feita e o saldo passa a R$ 0,00.
-- Dado um saldo de R$ 10,00 e uma compra de R$ 12,00, então "Crédito"
-  aparece desabilitado com "Saldo insuficiente...".
+- Dado um saldo de R$ 10,00 e uma compra de R$ 12,00, então o usuário
+  pode pagar R$ 10,00 com crédito e escolher Pix ou Ficha para os R$ 2,00
+  restantes, se tiver a permissão necessária.
 - Dado um saldo zero, então "Crédito" aparece desabilitado.
 - Dado o saldo exibido, então aparece no formato "R$ 38,00".
+- Dado a permissão "Usar crédito" desligada, então o usuário pode
+  consultar e recarregar, mas não pode pagar compras com o saldo.
 
 ### Extrato e controle
 - Dado qualquer recarga confirmada, compra ou ajuste, então aparece no
@@ -143,8 +162,7 @@ por compra, e o mercadinho reduz o fiado.
 ## Fora do escopo
 - Confirmação automática do Pix (integração com banco ou provedor de
   pagamentos)
-- Pagamento misto (parte com crédito, parte com Pix ou ficha)
-- Limite de gasto por mês, expiração de saldo, bônus ou *cashback*
+- Limite de gasto por mês, bônus ou *cashback*
 - Transferência de saldo entre pessoas e saque em dinheiro
 - Recarga automática recorrente
 - Avisos por e-mail ou notificação
@@ -170,9 +188,8 @@ Não fazem parte da spec, mas o plano precisa tratar:
 - Valores em **centavos inteiros**, e não em reais com decimais. Isso muda
   a decisão D2 do plano da Feature 001, que deve ser revista antes de
   implementar carrinho e crédito
-- Um Pix "copia e cola" estático pode levar o valor já preenchido, sem
-  integração bancária, mas **não avisa** quando foi pago. Por isso a
-  confirmação continua manual
+- A recarga usa o Pix dinâmico da Feature 005 para exibir Copia e Cola e
+  QR Code com o valor; isso não confirma automaticamente o pagamento
 - O débito de saldo precisa ser atômico no back-end (Fase 5). No front o
   saldo é simulado e não oferece garantia real
 
@@ -180,18 +197,16 @@ Não fazem parte da spec, mas o plano precisa tratar:
 - Crédito é uma **terceira forma de pagamento**, além de Pix e Ficha
 - A pessoa gera um Pix com um valor, o valor vira crédito e cada compra
   vai descontando do saldo
-
-## Perguntas em aberto
-- **Confirmação da recarga:** manual pelo administrador, como proposto
-  (R3 e R4)?
-- **Saldo insuficiente:** só pagar com crédito se o saldo cobrir tudo
-  (R9), deixando o pagamento misto para depois?
-- **Expiração:** o saldo não expira e passa de um mês para o outro
-  (R11)?
-- **Valores da recarga:** mínimo, máximo e atalhos (R1)
-- **Valor divergente do comprovante:** o administrador pode confirmar o
-  valor realmente pago (R5)?
-- **Permissão separada "Usar crédito":** vale criar, ou o bloqueio total
-  basta (R17)?
-- **Ficha e crédito juntos:** uma recarga pode quitar a pendência da
-  ficha automaticamente, ou as duas ficam separadas na primeira versão?
+- Recargas são confirmadas manualmente pelo administrador
+- Saldo insuficiente pode ser combinado com Pix ou Ficha, se as
+  respectivas permissões permitirem
+- O saldo não expira
+- A recarga não tem mínimo ou máximo predefinido; o valor deve ser maior
+  que zero
+- Se o comprovante divergir do valor solicitado, o administrador
+  registra e credita o valor efetivamente pago
+- A permissão "Usar crédito" é independente; desligá-la impede usar o
+  saldo em compras, mas permite consultar e recarregar
+- Ao confirmar uma recarga, compras pendentes na Ficha são quitadas por
+  ordem de antiguidade, somente inteiras; o restante não utilizado fica
+  como saldo de crédito

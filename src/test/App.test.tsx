@@ -91,6 +91,11 @@ describe('catálogo', () => {
     expect(
       screen.getByRole('heading', { name: 'Pagamento' }),
     ).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', {
+        name: 'QR Code demonstrativo, não pagável',
+      }),
+    ).toBeInTheDocument()
     expect(screen.getByText('Água mineral 500 ml')).toBeInTheDocument()
     expect(
       screen.getByRole('img', { name: 'Água mineral 500 ml' }),
@@ -167,6 +172,71 @@ describe('catálogo', () => {
 
     expect(writeText).toHaveBeenCalledWith('CHAVE-PIX-DA-SINNC')
     expect(screen.getByRole('status')).toHaveTextContent('Chave copiada!')
+  })
+
+  it('mostra o valor da água no carrinho e reduz o estoque ao registrar na ficha', async () => {
+    const user = userEvent.setup()
+    await abrirCatalogo()
+
+    const produto = screen
+      .getByRole('heading', { name: 'Água mineral 500 ml' })
+      .closest('li')
+    expect(produto).not.toBeNull()
+
+    if (produto) {
+      await user.click(
+        within(produto).getByRole('button', {
+          name: 'Adicionar ao carrinho',
+        }),
+      )
+    }
+
+    expect(screen.getAllByText('R$ 2,50', { exact: true })).toHaveLength(2)
+    const registrarNaFicha = screen.getByRole('button', {
+      name: 'Registrar na Ficha',
+    })
+    expect(registrarNaFicha).toBeEnabled()
+
+    await user.click(registrarNaFicha)
+
+    expect(await screen.findByRole('status')).toHaveTextContent(
+      'Compra registrada na ficha. Estoque atualizado nesta demonstração.',
+    )
+    expect(screen.getByText('Disponível: 23')).toBeInTheDocument()
+    expect(screen.getByText('R$ 0,00')).toBeInTheDocument()
+    expect(registrarNaFicha).toBeDisabled()
+  })
+
+  it('remove a água do carrinho pelo botão X e atualiza o total', async () => {
+    const user = userEvent.setup()
+    await abrirCatalogo()
+
+    const produto = screen
+      .getByRole('heading', { name: 'Água mineral 500 ml' })
+      .closest('li')
+    expect(produto).not.toBeNull()
+
+    if (produto) {
+      await user.click(
+        within(produto).getByRole('button', {
+          name: 'Adicionar ao carrinho',
+        }),
+      )
+    }
+
+    expect(screen.getAllByText('R$ 2,50', { exact: true })).toHaveLength(2)
+    await user.click(
+      screen.getByRole('button', {
+        name: 'Remover Água mineral 500 ml do carrinho',
+      }),
+    )
+
+    expect(screen.getByText('Seu carrinho está vazio.')).toBeInTheDocument()
+    expect(screen.getByText('R$ 0,00')).toBeInTheDocument()
+    expect(screen.getByText('Disponível: 24')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Registrar na Ficha' }),
+    ).toBeDisabled()
   })
 
   it('marca item sem estoque como indisponível e desabilita o botão', async () => {

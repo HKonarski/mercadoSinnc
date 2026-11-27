@@ -1,8 +1,5 @@
 # Feature 005: Pagamento (Pix, ficha e comprovante)
 
-Pontos marcados com **[a confirmar]** são propostas à espera de
-aprovação.
-
 ## Objetivo
 Permitir que o usuário conclua a compra do carrinho pagando por **Pix**
 ou deixando na **ficha** (caderneta/fiado), registrar a compra, enviar o
@@ -38,8 +35,10 @@ ficha de papel (data, itens, quantidade, assinatura e se pagou).
 - R2. Antes de concluir, o sistema confere de novo estoque e preço
   (Feature 002, R15). Se algo mudou, avisa e devolve a pessoa ao
   carrinho para ajustar
-- R3. As formas de pagamento são **Pix** e **Ficha**, em uma lista
-  extensível (o crédito, Feature 006, é uma evolução posterior)
+- R3. As formas de pagamento da primeira versão são **Pix** e **Ficha**,
+  em uma lista extensível. Quando a Feature 006 for implementada,
+  **Crédito** será acrescentado; o usuário poderá combinar crédito com
+  Pix ou Ficha para pagar uma compra, conforme saldo e permissões
 - R4. "Ficha" só fica habilitada para contas com a permissão "Comprar na
   ficha" (Feature 004, R18). Sem ela, aparece indisponível com a
   mensagem da Feature 004, R25
@@ -51,14 +50,16 @@ ficha de papel (data, itens, quantidade, assinatura e se pagou).
 - R7. Os itens e preços ficam **copiados** na compra: mudar o preço ou
   ocultar o item depois não altera compras antigas
 - R8. Ao concluir, o estoque baixa na hora pelas quantidades compradas e
-  o carrinho é esvaziado **[a confirmar]**
+  o carrinho é esvaziado. O estoque baixa tanto para compras Pix quanto
+  para compras na Ficha (decisão da Feature 002)
 - R9. Depois de concluir, aparece a confirmação com número, data, itens,
   total, forma de pagamento e o que fazer em seguida
 
 ### Pix
-- R10. Ao escolher Pix, a tela mostra o valor total e a chave Pix
-  (definida pelo administrador), com o botão "Copiar Chave Pix" e o
-  retorno "Chave copiada!"
+- R10. Ao escolher Pix, a tela gera um Pix dinâmico para o valor total da
+  compra e mostra o código "Pix Copia e Cola" e seu QR Code. Ambos
+  representam o mesmo payload. A ação de copiar o código confirma
+  "Pix Copia e Cola copiado!"
 - R11. A compra no Pix nasce **Pendente**. A pessoa paga no aplicativo do
   banco e envia o comprovante, na hora ou depois (R14)
 
@@ -69,7 +70,7 @@ ficha de papel (data, itens, quantidade, assinatura e se pagou).
 
 ### Comprovante
 - R13. A pessoa envia o comprovante escolhendo um arquivo de imagem (JPG
-  ou PNG) ou PDF, com tamanho máximo **[a confirmar: 5 MB]**, e vê uma
+  ou PNG) ou PDF, com tamanho máximo de **10 MB**, e vê uma
   pré-visualização antes de enviar
 - R14. O comprovante é vinculado a uma ou mais compras **Pendentes** da
   própria pessoa: a compra recém-feita ou as pendências escolhidas
@@ -84,13 +85,15 @@ ficha de papel (data, itens, quantidade, assinatura e se pagou).
 
 ### Pagar pendências
 - R18. O usuário pode pagar compras pendentes escolhendo quais (ou
-  todas). O sistema soma os valores, mostra a chave Pix com o total e
-  permite enviar o comprovante ligado às compras escolhidas
+  todas). O sistema soma os valores, gera e mostra o Pix Copia e Cola e
+  o QR Code para esse total e permite enviar o comprovante ligado às
+  compras escolhidas
 - R19. Cada compra é paga **inteira**: não existe pagamento parcial de
-  uma única compra **[a confirmar]**
-- R20. O valor pago comprovado deve cobrir a soma das compras
-  vinculadas; qualquer diferença é decidida pelo administrador na
-  conferência (Feature 008)
+  uma única compra
+- R20. Se o valor comprovado não cobrir todas as compras vinculadas, o
+  administrador pode confirmar compras inteiras cobertas pelo valor. A
+  diferença restante é tratada manualmente pelo administrador; não é
+  convertida automaticamente em crédito nem reembolso
 
 ### Acesso e geral
 - R21. Pagar exige login (Feature 004, R12). Contas Pendentes de
@@ -113,7 +116,7 @@ ficha de papel (data, itens, quantidade, assinatura e se pagou).
 - Dado que cliquei duas vezes seguidas em "Concluir compra", então só
   uma compra é criada.
 - Dado uma compra concluída, então o estoque dos itens baixou pelas
-  quantidades compradas e o carrinho ficou vazio. **[a confirmar]**
+  quantidades compradas e o carrinho ficou vazio.
 - Dado uma compra concluída e depois um aumento de preço do item, então
   a compra continua mostrando o preço antigo.
 
@@ -125,10 +128,12 @@ ficha de papel (data, itens, quantidade, assinatura e se pagou).
   disponível.
 
 ### Pix
-- Dado "Pix" escolhido, então aparecem o valor total e a chave Pix com o
-  botão "Copiar Chave Pix".
-- Dado que cliquei em "Copiar Chave Pix", então a chave é copiada e
-  aparece "Chave copiada!".
+- Dado "Pix" escolhido, então aparecem o valor total, o Pix Copia e Cola
+  com o valor preenchido e o QR Code correspondente.
+- Dado o Pix Copia e Cola exibido, então o QR Code codifica o mesmo
+  payload, incluindo o valor da compra.
+- Dado que cliquei em "Copiar Pix Copia e Cola", então o código é
+  copiado e aparece "Pix Copia e Cola copiado!".
 - Dado uma compra concluída no Pix, então o status é "Pendente".
 
 ### Ficha
@@ -153,6 +158,10 @@ ficha de papel (data, itens, quantidade, assinatura e se pagou).
 - Dado 3 compras pendentes de R$ 10,00, R$ 5,00 e R$ 7,00, quando
   escolher a primeira e a terceira, então o Pix mostra o total "R$
   17,00".
+- Dado um comprovante com valor que cobre apenas algumas compras
+  selecionadas, então o administrador pode confirmar somente compras
+  inteiras cujo total não ultrapasse o valor comprovado e trata
+  manualmente a diferença.
 - Dado uma pendência selecionada, quando enviar o comprovante, então só
   as compras selecionadas passam a "Aguardando conferência".
 - Dado uma compra de status "Paga" ou "Aguardando conferência", então
@@ -214,34 +223,36 @@ Não fazem parte da spec, mas o plano precisa tratar:
   acontecer juntos (tudo ou nada); a garantia real é do back-end
   (Fase 5)
 - Na versão simulada, o arquivo do comprovante pode ficar só em memória
-- Um Pix "copia e cola" com o valor já preenchido poderia substituir a
-  chave simples, sem integração bancária, mas não avisa quando o
-  pagamento foi feito
+- O plano técnico deve definir como gerar o payload Pix dinâmico e obter
+  com segurança os dados do recebedor. O Copia e Cola e o QR Code devem
+  representar o mesmo payload, com o valor da compra; a geração não
+  confirma o pagamento
 
 ## Decisões já tomadas
 - Formas de pagamento da primeira versão: somente **Pix e Ficha**
 - O comprovante do Pix serve para dar baixa (o administrador confere)
+- O Pix será dinâmico por compra: o valor total será incluído no Pix
+  Copia e Cola e no QR Code correspondente; a confirmação continua
+  manual por comprovante
+- O comprovante aceita JPG, PNG ou PDF de até 10 MB
+- Não há pagamento parcial de uma compra; o administrador pode quitar
+  compras inteiras cobertas pelo valor comprovado e tratar a diferença
+  manualmente
+- Compras na Ficha vencem no dia 15 do mês seguinte ao da compra, ou no
+  próximo dia útil se a data cair em fim de semana ou feriado, usando o
+  calendário nacional, estadual do Paraná e municipal de Pato Branco/PR
+  (incluindo 14 de dezembro, Emancipação Política do Município)
+- Após o vencimento sem quitação, novas compras na Ficha ficam
+  automaticamente restritas; a restrição é removida depois que o
+  administrador confirma a quitação
 - "Ficha" depende da permissão "Comprar na ficha" (Feature 004)
 - O crédito pré-pago é uma evolução posterior (Feature 006)
+- Quando a Feature 006 for implementada, Crédito será uma terceira forma
+  de pagamento e poderá ser combinado com Pix ou Ficha para completar
+  uma compra; cada compra continua sendo registrada integralmente
 - No protótipo front-end, a área de pendências pode montar um código Pix
   demonstrativo, explicitamente não pagável; a chave atual também é
   placeholder. Não há integração bancária nem confirmação de pagamento
 - No protótipo front-end, o formulário de comprovante aceita PDF e
   altera o status apenas em memória para demonstrar o fluxo; o arquivo
   não é transmitido nem armazenado
-
-## Perguntas em aberto
-- **Baixa de estoque:** o estoque baixa ao concluir a compra (R8), mesmo
-  antes de o pagamento ser confirmado? É a resposta à pergunta da
-  Feature 002
-- **Arquivo do comprovante:** tipos aceitos (JPG, PNG, PDF) e tamanho
-  máximo (R13)
-- **Pagamento parcial:** só compras inteiras (R19), ou aceitar pagar
-  parte do valor pendente?
-- **Prazo da ficha:** existe fechamento mensal ou data para pagar? O que
-  acontece com quem passa do prazo?
-- **Limite da ficha:** existe um valor máximo de pendência por pessoa,
-  com bloqueio automático? (a Feature 004, R19, deixou isso como
-  evolução)
-- **Pix com valor embutido:** manter só a chave (como no wireframe) ou
-  gerar o "copia e cola" com o valor?

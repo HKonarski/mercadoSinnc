@@ -14,6 +14,27 @@
   ],
   "produtos": [
     {
+      "id": "1",
+      "nome": "Água mineral 500 ml",
+      "categoriaId": "bebidas",
+      "precoCentavos": 250,
+      "quantidade": 24,
+      "estoqueMinimo": 6,
+      "codigoBarras": "7891000000011",
+      "imagem": "Agua mineral sem gas 500ml.jfif",
+      "ativo": true
+    },
+    {
+      "id": "3",
+      "nome": "Pão de queijo",
+      "categoriaId": "salgadinhos",
+      "precoCentavos": 350,
+      "quantidade": 0,
+      "estoqueMinimo": 4,
+      "codigoBarras": "7891000000035",
+      "ativo": true
+    },
+    {
       "id": "10",
       "nome": "Doritos 32gr",
       "categoriaId": "salgadinhos",
